@@ -1,0 +1,3 @@
+% Das kleine MongoDB Buch
+% Karl Seguin
+% Deutsche Übersetzung von Klaas-Henning Zweck (khz@tzi.org)
