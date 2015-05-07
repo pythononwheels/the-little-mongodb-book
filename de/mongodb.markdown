@@ -2,13 +2,13 @@
 
 ## Lizenz ##
 Das kleine MongoDB Buch ist Lizensiert unter der Attribution-NonCommercial 3.0 
-Unported license. ** Sie sollten für dieses Buch nicht bezahlt haben müssen **
+Unported license. **Sie sollten für dieses Buch nicht bezahlt haben müssen.**
 
-Sie könnne das Buch grundsätzlich vervielfältige, verteilen, verändern oder verbreiten.
+Sie könnne das Buch grundsätzlich vervielfältigen, verteilen, verändern oder sonstwie verbreiten.
 Ich möchte sie jedoch bitten, das sie dies immer mit dem Hinweis auf
 mich, Karl Seguin, tun und das Buch nicht für kommerzielle Zwecke verwenden.
 
-Hier können die den kompletten Inhalt der Lizenz einsehen: 
+Hier können sie den kompletten Inhalt der Lizenz einsehen: 
 
 <http://creativecommons.org/licenses/by-nc/3.0/legalcode>
 
