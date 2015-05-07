@@ -55,8 +55,9 @@ beisteuern.
 
 # Einleitung #
  > It's not my fault the chapters are short, MongoDB is just easy to learn.
- > Es ist nicht meine Schuld das die Kapitel kurz sind, MongoDB ist einfach leicht zu lernen.
  
+ > Es ist nicht meine Schuld das die Kapitel kurz sind, MongoDB ist einfach leicht zu lernen.
+
 
 Oftmals wird gesagt das sich Technologie rasant entwickelt. Es ist zwar richtig, das die Liste der Technologien 
 und Techniken immer länger wird, aber ich war immer der Meinung das die fundamentalen Methoden und Technologien 
