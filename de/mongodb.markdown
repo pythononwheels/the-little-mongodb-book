@@ -109,4 +109,46 @@ Der grösste Teil des Buches befasst sich mit den MongoDB Kernfunktionen. Deshal
 mit der MongoDB shell arbeiten. Die shell ist sowohl ein gutes Tool zum lerene als auch zur Administration,
 zum Ausführen ihrer Programme benötigen sie jedoch auch einen MongoDB Treiber.
 
-Das bringt uns zur ersten Sache die sie über MongoDB lernen sollten: die MongoDB Treiber.
+Das bringt uns zur ersten Sache die sie über MongoDB lernen sollten: die MongoDB Treiber. MonmgoDB hat
+eine ganze [Reihe von offiziellen Treibern](http://docs.mongodb.org/ecosystem/drivers/) für verschiedene 
+Programmiersprachen. Diese Treiber sind vergleichbar mit den Datenbanktreibern die sie wahrscheinliche schon
+von anderen DBDatenbank Systemen kennen. Auf der Basis dieser Treiber hat die Entwicklergemeinde speziellere
+libraries und Frameworks für verschieden Sprachen implementiert. 
+Beispiele sind [NoRM](https://github.com/atheken/NoRM), eine C# library die LINQ implementiert, sowie 
+[MongoMapper](https://github.com/jnunemaker/mongomapper), eine Active-Record freundliche Ruby library.
+Ob sie ihre Programme mit den Basistreiber oder mit Hilfe einer höheren Library entwicklen liegt alleine
+bei ihnen. Ich möchte dies hier nur klarstellen, da Menschen die neu bei MongoDB sind manchmal durch den
+Umstand verwirrt werden, das es offizielle Treiber und Community libraries gibt.
+Erstere konzentrieren sich mehr auf Konnektivität und Kommunikaiton mit MongoDB während die Community libraries
+sich mehr auf die Programmiersprachen und Framework spezifischen Aspekte beziehen.
+
+Während sie dieses Buch lesen möchte ich sie ermutigen auch immer praktisch zu probieren was ich vorstelle
+und auch Fragen die sie haben selbst durch ausprobierne zu klären. Es ist sehr leicht mit MongoDb zu starten,
+also lassen sie uns ein paar Minuten nehmen um die Umgebung aufzusetzen.
+
+1. Gehen sie auf die [offizielle download Seite](http://www.mongodb.org/downloads) und laden sie das MongoDB 
+release (Ich empfehle die "stable version") für ihr Betriebssystem. Für Entwicklungszwecke können sie sowohl
+die 32-Bit als auch die 64-Bit Version nehmen.
+
+2. Packen sie die Archivdatei aus (in welchem Verzeichnis sie wollen) und wechseln sie in das Unterverzeichnis 
+`bin`. Starten sie jetzt noch nichts, zur ihrer Information sage ich ihnen aber schonmal das es sich bei `mongod``
+um den Server Prozeß und bei `mongo`um die client shell handelt. Dies sind die beiden Programme mit denen 
+wir die meiste Zeit arbeiten werden.
+
+3. Erstellen sie eine Textdatei Namens `mongodb.config` im Unterverzeichnis `bin`.
+
+4. Fügen sie die folgende Zeile zur Datei `mongodb.config` hinzu: 
+`dbpath=PATH_TO_WHERE_YOU_WANT_TO_STORE_YOUR_DATABASE_FILES`. Achten sie darauf das die Pfadangabe für
+ihre Betriebssystem richtig formuliert ist. Für Windows könnte der Eintrag Beispielsweise so aussehen 
+`dbpath=c:\mongodb\data` und für Linux z.B. so `dbpath=/var/lib/mongodb/data`.
+
+5. Stellen sie sicher das der angegebene `dbpath`auch existiert. Oder erstellen sie ihn jetzt.
+
+6. Starten sie jetzt `mongod` mit dem Parameter `--config /path/to/your/mongodb.config`.
+
+Hier ein komplettes Beispiel für Windows Anwender. Wenn sie das Archiv in das Verzeichnis `c:\mongodb\`
+entpackt haben und sie haben als Datenverzeichnis `c:\mongodb\data\` angelegt, dann müssen sie 
+folgendes in der Datei `c:\mongodb\bin\mongodb.config` angeben: 
+
+
+ 
