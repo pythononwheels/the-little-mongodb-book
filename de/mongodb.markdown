@@ -30,7 +30,7 @@ Hier findet ihr seinen blog: <http://openmymind.net>, und seine tweets via [@kar
 
 ## With Thanks To ##
 Ein besonderes Dankeschön geht an [Perry Neal](http://twitter.com/perryneal) 
-Der mir seine Augen, seinen Verstand und seine Leidenschaft gelieheh hat. 
+Der mir seine Augen, seinen Verstand und seine Leidenschaft geliehen hat. 
 Deine Hilfe ist unbezahlbar. Ich danke dir.
 
 ## Aktuelle Version ##
