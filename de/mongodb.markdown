@@ -68,7 +68,7 @@ Auffällig ist jedoch, mit welcher Geschwindigkeit (heute) technologien ersetzt 
 etablierte Technologien von einer veränderten Ausrichtung des Entwickler Fokus bedroht.
 
 Nichts könnte repräsentativer für diesen plötzlichen Wandel sein als der Erfolg der NoSQL Technologien gegen
-die sehr gut etablierte Basis der relationalen Datenbanken. 
+die sehr gut etablierte Basis der relationalen Datenbanken (RDBMS). 
 Vor nicht all zu langer Zeit basierte das Netz noch auf ein paar RDBMS und plötzlich hatten sich fünf
 oder sechs NoSQL Systeme als eine echte Alternative etabliert.
 
