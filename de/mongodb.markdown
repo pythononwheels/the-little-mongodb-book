@@ -75,17 +75,19 @@ oder sechs NoSQL Systeme als eine echte Alternative etabliert.
 Auch wenn diese Veränderungen scheinbar über Nacht kamen, benötigen sie in Wahrheit manchmal Jahre um
 sich in der Breite zu etablieren. Der anfängliche Enthusiasmus bezieht sich auf eine relativ kleine Gruppe 
 von Entwicklern und Firmen. 
+
 Aus Fehlern wird gelernt, Lösungen werden verfeinert (refined) und wenn andere sehen das sich eine neue Technologie 
 durchsetzt, dann fangen sie langsam an diese Technologie auch einzusetzen.
-Noch einmal, das was ich eben geagt habe trifft insbesondere für NoSQL DBs zu. Viele NoSQL Lösungsansätze sind
+Noch einmal, das was ich eben gesagt habe trifft insbesondere für NoSQL DBs zu. Viele NoSQL Lösungsansätze sind
 eben kein neuer Ersatz für bestehende Probleme sondern adressieren spezifische Bedarfe die von bestehenden (SQL)
 Systemen nicht abgedeckt werden.
 
 Nach diesen ganzen Erkärungen, sollte ich zunächst erläutern was NoSQL eigentlich bedeutet.
 Es ist ein Weiter Begriff der von verschiedenen Menschen unterschiedlich interpretiert wird.
 Persönlich benutze ich den Begriff eher weit gefasst für Systeme im Bereich der Datenspeicherung.
-Anders geagt bedeutet NoSQL (für mich) der Überzeugung zu sein, das Datenpersistenz nicht die Verantwortung
+Anders gesagt bedeutet NoSQL (für mich) der Überzeugung zu sein, das Datenpersistenz nicht die Verantwortung
 eines einzelenen Systems ist.
+
 Hersteller relationaler Datenbankmanagementsysteme versuchen seit langer Zeit ihre Systeme als eine "One size
 fits all" Lösung zu positionieren. NoSQL Systeme hingegen gehe eher in Richtung kleinere Einheiten der 
 Verantwortlichkeit um das beste tool für den jeweiligen Zweck wirksam einsetzen zu können.
