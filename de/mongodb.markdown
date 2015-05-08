@@ -65,7 +65,7 @@ und Techniken immer länger wird, aber ich war immer der Meinung das die fundame
 für Softwareentwickler sich eher langsam entwickeln. Man kann Jahre damit verbringen eine kleine, aber
 wichtige Technik zu erlernen.
 Auffällig ist jedoch, mit welcher Geschwindigkeit (heute) technologien ersetzt werden. Scheinbar über Nacht werden 
-etablierte Technologien von Veränderungen im Entwickler Fokus bedroht.
+etablierte Technologien von einer veränderten Ausrichtung des Entwickler Fokus bedroht.
 
 Nichts könnte repräsentativer für diesen plötzlichen Wandel sein als der Erfolg der NoSQL Technologien gegen
 die sehr gut etablierte Basis der relationalen Datenbanken. 
