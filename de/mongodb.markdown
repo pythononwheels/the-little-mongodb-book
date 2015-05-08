@@ -80,6 +80,33 @@ Noch einmal, das was ich eben geagt habe trifft insbesondere für NoSQL DBs zu. 
 eben kein neuer Ersatz für bestehende Probleme sondern adressieren spezifische Bedarfe die von bestehenden (SQL)
 Systemen nicht abgedeckt werden.
 
-Nach diesen ganzen Erläuterungen, sollte ich als ersten erläutern was NoSQL eigentlich bedeutet.
+Nach diesen ganzen Erkärungen, sollte ich zunächst erläutern was NoSQL eigentlich bedeutet.
 Es ist ein Weiter Begriff der von verschiedenen Menschen unterschiedlich interpretiert wird.
-l36,col115
+Persönlich benutze ich den Begriff eher weit gefasst für Systeme im Bereich der Datenspeicherung.
+Anders geagt bedeutet NoSQL (für mich) der Überzeugung zu sein, das Datenpersistenz nicht die Verantwortung
+eines einzelenen Systems ist.
+Hersteller relationaler Datenbankmanagementsysteme versuchen seit langer Zeit ihre Systeme als eine "One size
+fits all" Lösung zu positionieren. NoSQL Systeme hingegen gehe eher in Richtung kleinere Einheiten der 
+Verantwortlichkeit um das beste tool für den jeweiligen Zweck wirksam einsetzen zu können.
+Also kann es durchaus so sein, das ihr NoSQL Anwendungs-Stack auch relationale Datenbanken, wie zum Beispiel MySQL
+beeinhaltet, sie aber eben auch z.B. Redis zur schnellen Datensuche und Hadoop für intensive
+Datenverarbeitung nutzen. 
+Kurz gesagt geht es beinm Thema NoSQL um Offenheit und Bewusstsein für Alternative, existierende und neue Muster
+und Tools um Daten zu Verwalten.
+
+Jetzt fragen sie sich sicherlich wie nun MongoDB in all dies hineinpasst. Als Dokumentenorientierte Datenbank (DB)
+ist MongoDB ein sehr breit einsetzbares (generalized) NoSQL System. Es sollte als eine Alternative zu relationalen
+Datenbanksystemen (RDB) betrachtet werden. Wie auch bei RDB Systemen kann MongoDB davon profitieren, wenn man
+es mit einem etwas speziellerne NoSQL System für bestimmte Bereiche kombiniert.
+MongoDB selbst hat Vor- und auch Nachteile, auf die in späteren Kapiteln des Buches eingegangen wird.
+
+Wie sie vielleicht schon bemerkt haben, benutzen wir in diesem Buch die Begriffe MongoDB und Mongo als
+Synonyme.
+
+# Getting started #
+
+Der grösste Teil des Buches befasst sich mit den MongoDB Kernfunktionen. Deshalb werden wir sehr viel
+mit der MongoDB shell arbeiten. Die shell ist sowohl ein gutes Tool zum lerene als auch zur Administration,
+zum Ausführen ihrer Programme benötigen sie jedoch auch einen MongoDB Treiber.
+
+Das bringt uns zur ersten Sache die sie über MongoDB lernen sollten: die MongoDB Treiber.
