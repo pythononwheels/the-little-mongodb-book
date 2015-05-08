@@ -41,7 +41,7 @@ The aktuellen Original-Quellen dieses Buches findet ihr unter:
 <http://github.com/karlseguin/the-little-mongodb-book>.
 
 ## Die deutsche Übersetzung ##
-Die deutshce Übersetzung ist von Klaas-Henning Zweck.
+Die deutsche Übersetzung wurde erstellt von Klaas-Henning Zweck.
 Die aktuellen Quellen der deutschen Übersetzung des Buches finden sie hier:
 
 <https://github.com/pythononwheels/the-little-mongodb-book>.
