@@ -151,7 +151,62 @@ ihre Betriebssystem richtig formuliert ist. Für Windows könnte der Eintrag Bei
 
 Hier ein komplettes Beispiel für Windows Anwender. Wenn sie das Archiv in das Verzeichnis `c:\mongodb\`
 entpackt haben und sie haben als Datenverzeichnis `c:\mongodb\data\` angelegt, dann müssen sie 
-folgendes in der Datei `c:\mongodb\bin\mongodb.config` angeben: 
+das wie folgt in der Datei `c:\mongodb\bin\mongodb.config` spezifizieren: `dbpath=c:\mongodb\data\`.
+Sie starten `mongod` dann von der Kommandozeile mit: `c:\mongodb\bin\mongod --config c:\mongodb\bin\mongodb.config`.
+
+Sie können das `bin` Verzeichnnis natürlich auch zu ihrer PATH Umgebungsvariable hinzufügen um die Aufrufe
+kürzer (less verbose) zu machen. 
+Für MacOSX und Linux Anwender funktioniert das im wesentlichen genauso, sie müssen nur die Pfade entsprechend
+anpassen.
+
+Ich hoffe sie haben MongoDB nun gestartet. Sollten sie eine Fehlermeldung sehen, lesen sie diese bitte genau durch.
+Der Server ist wirlklich gut darin zu melden was schief gelaufen ist.
+
+Sie können jetzt `mongo` starten (ohne das *d*) um eine shell mit dem Server zu verbinden. Geben sie als Test
+`db.version()` um sicher zu stellen das alles funktioniert. Sie sollten als Ausgabe die Versionsnummer 
+(von MongoDB) sehen die sie installiert haben.
+
+# Kapitel 1 - Die Grundlagen #
+ 
+Wir beginnen unsere Reise mit den Grundlegenden Mechanismen der Arbeit mit MongoDB. Natürlich sind dies
+die Kernthemen um MongoDB zu verstehen aber es sollte und auch einen guten Eindruck vermitteln wo
+MongoDB einsetzbar ist.
+
+Anfänglich gibt es sechs einfache Konzeote die wir verstehen müssen.
+
+1. MongoDB hat das selbe Konzept einer `Datenbank` das sie vermutlich schon kennen (oder das eines Schemas für
+die Oracle Leute). In jeder MongoDB Instanz kann es Null oder mehr Datenbanken geben, von denen jede als 
+übergeordnerter Container für weitere Inhalte fungiert.
+
+2. Jede Datenbank hat Null oder mehr `collections`. Eine collection hat so viele gemeinsamkeiten mit einer klassischen
+Tabelle, das man sich die beiden als identisch vorstellen kann.
+
+3. `collections` bestehen aus Null oder mehr `Dokumenten`. Sie können sich ein `Dokument` als eine Zeile einer 
+Tabelle vorstellen.
+
+4. Jedes `Dokument` besteht aus einem oder mehr `Feldern`, die sie sich wie Spalten einer Tabelle vorstellen können.
+
+5. `Indexe` funktionieren in MongoDB grösstenteils so wie in den entsprechenden RDBMS.
+
+6. `Cursors` sind anders als die vorherigen fünf Konzepte. Sie werden oftmals übersehen, sind aber meines
+Erachtens nach wichtig genug, sie gesondert zu besprechen. Es ist wichtig zu verstehen, das wann immer sie
+in MongoDB nach Daten suchen, sie einen Zeiger auf das Ergebnis als Antowrt erhalten. Dieser Zeiger wird
+`cursor` genannt. Mit diesem `cursor` können sie verschiedene Operationen, wie Beispielsweise `zählen` oder 
+`überspringen` (skipping ahead) ausführen bevor sie die eigentlichen Daten übertragen.
+
+Zur Wiederholung. MongoDB besteht aus `Datenbanken` die `collections` enthalten. Jede `collection` enthält
+`Dokumente`, die wiederum aus `Feldern` bestehen. Sie können `collections` indexieren um die Such- und 
+Sortiergeschwindigkeit zu erhöhen. 
+Und am Ende erhalten wir die Suchergebnisse in Form eines `cursors` dessen eigentliche Ausführung so lange
+verzögert wird bsi sie wirklich benötigt wird.
+
+
+
+
+
+
+
+
 
 
  
