@@ -172,7 +172,7 @@ Wir beginnen unsere Reise mit den Grundlegenden Mechanismen der Arbeit mit Mongo
 die Kernthemen um MongoDB zu verstehen aber es sollte und auch einen guten Eindruck vermitteln wo
 MongoDB einsetzbar ist.
 
-Anfänglich gibt es sechs einfache Konzeote die wir verstehen müssen.
+Es gibt sechs einfache Konzepte die wir verstehen müssen.
 
 1. MongoDB hat das selbe Konzept einer `Datenbank` das sie vermutlich schon kennen (oder das eines Schemas für
 die Oracle Leute). In jeder MongoDB Instanz kann es Null oder mehr Datenbanken geben, von denen jede als 
