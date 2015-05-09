@@ -194,7 +194,7 @@ in MongoDB nach Daten suchen, sie einen Zeiger auf das Ergebnis als Antowrt erha
 `cursor` genannt. Mit diesem `cursor` können sie verschiedene Operationen, wie Beispielsweise `zählen` oder 
 `überspringen` (skipping ahead) ausführen bevor sie die eigentlichen Daten übertragen.
 
-Zur Wiederholung. MongoDB besteht aus `Datenbanken` die `collections` enthalten. Jede `collection` enthält
+Zur Wiederholung: MongoDB besteht aus `Datenbanken` die `collections` enthalten. Jede `collection` enthält
 `Dokumente`, die wiederum aus `Feldern` bestehen. Sie können `collections` indexieren um die Such- und 
 Sortiergeschwindigkeit zu erhöhen. 
 Und am Ende erhalten wir die Suchergebnisse in Form eines `cursors` dessen eigentliche Ausführung so lange
