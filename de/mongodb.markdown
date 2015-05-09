@@ -207,8 +207,10 @@ Der haupt Unterschied liegt darin, das relationale Datenbanken ihre `Spalten` au
 wohingegen dokumenten-orientierte Datenbanken ihre `Felder` auf der `Dokumenten` Ebene definieren.
 Das bedeutet das jedes `Dokument` einer `collection` seine eigenen `Felder` haben kann. (Die sich
 von anderen Dokumenten in der selben `collection` unterscheiden können).
-Einen `collection` ist also ein eher *dummer* container im Vergleich zu einer Tabelle, während in einem `Dokument``
+Einen `collection` ist also ein eher *dummer* container im Vergleich zu einer Tabelle, während in einem `Dokument`
 viel mehr Informatione  als in einer `Zeile` stecken.
+
+
 
 
 
