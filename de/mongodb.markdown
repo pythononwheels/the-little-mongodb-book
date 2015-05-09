@@ -18,6 +18,7 @@ Er ist ein Experte in .Net und Ruby. Des weiteren trägt er semi-aktiv zu OSS Pr
 ist technischer Autor und hält gelegentlich Vorträge. 
 Bezogen auf MongoDB war er Kern Entwickler der C# MongoDB Library NoRM, schrieb
 das interaktive tutorial [mongly](http://openmymind.net/mongly/) und entwickelte [Mongo Web Admin](https://github.com/karlseguin/Mongo-Web-Admin). 
+
 Sein kostenloser service für Spiele Entwickler, [mogade.com](http://mogade.com/), 
 läuft natürlich auf MongoDB.
 
@@ -47,7 +48,7 @@ Die aktuellen Quellen der deutschen Übersetzung des Buches findet ihr hier:
 
 Und hier findet ihr die jeweils aktuellen PDF, ePub und mobi Versionen.
 
-<https://pythononwheels.org/the-little-mongodb-book>
+<http://pythononwheels.org/the-little-mongodb-book>
 
 Anmerkungen zur deutschen Übersetzung (Rechtschreibung, Sprachstil etc.)
 könnt ihr gerne via github, email (khz@tzi.org) oder twitter [@pythononwheels](http://twitter.com/pythononwheels) 
