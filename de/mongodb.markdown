@@ -201,9 +201,9 @@ Und am Ende erhalten wir die Suchergebnisse in Form eines `cursors` dessen eigen
 verzögert wird bis sie wirklich benötigt wird.
 
 Warum benutzen wir hier neue Begriffe (collection vs. Tabelle, Dokument vs. Zeile, Feld vs. Spalte)? Machen
-wir das nur um die Dinge zu komplizieren ? In Wahrheit sind die Konzepte zwar ähnlich der Konzepte in der
+wir das nur um die Dinge zu komplizieren ? In Wahrheit sind die (MongoDB) Konzepte zwar ähnlich der Konzepte in der
 Welt der raltionalen Datenbanken aber sie sind eben doch nicht genau gleich.
-Der Hautpunterschied liegt darin, das relationale Datenbanken ihre `Spalten` auf `Tabellen` Ebene definieren
+Der haupt Unterschied liegt darin, das relationale Datenbanken ihre `Spalten` auf `Tabellen` Ebene definieren
 wohingegen dokumenten-orientierte Datenbanken ihre `Felder` auf der `Dokumenten` Ebene definieren.
 Das bedeutet das jedes `Dokument` einer `collection` seine eigenen `Felder` haben kann. (Die sich
 von anderen Dokumenten in der selben `collection` unterscheiden können).
