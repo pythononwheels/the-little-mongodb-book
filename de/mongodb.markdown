@@ -208,7 +208,7 @@ wohingegen dokumenten-orientierte Datenbanken ihre `Felder` auf der `Dokumenten`
 Das bedeutet das jedes `Dokument` einer `collection` seine eigenen `Felder` haben kann. (Die sich
 von anderen Dokumenten in der selben `collection` unterscheiden können).
 Einen `collection` ist also ein eher *dummer* container im Vergleich zu einer Tabelle, während in einem `Dokument`
-viel mehr Informatione  als in einer `Zeile` stecken.
+viel mehr Informationen  als in einer `Zeile` stecken.
 
 
 
