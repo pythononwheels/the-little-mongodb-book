@@ -198,7 +198,17 @@ Zur Wiederholung. MongoDB besteht aus `Datenbanken` die `collections` enthalten.
 `Dokumente`, die wiederum aus `Feldern` bestehen. Sie können `collections` indexieren um die Such- und 
 Sortiergeschwindigkeit zu erhöhen. 
 Und am Ende erhalten wir die Suchergebnisse in Form eines `cursors` dessen eigentliche Ausführung so lange
-verzögert wird bsi sie wirklich benötigt wird.
+verzögert wird bis sie wirklich benötigt wird.
+
+Warum benutzen wir hier neue Begriffe (collection vs. Tabelle, Dokument vs. Zeile, Feld vs. Spalte)? Machen
+wir das nur um die Dinge zu komplizieren ? In Wahrheit sind die Konzepte zwar ähnlich der Konzepte in der
+Welt der raltionalen Datenbanken aber sie sind eben doch nicht genau gleich.
+Der Hautpunterschied liegt darin, das relationale Datenbanken ihre `Spalten` auf `Tabellen` Ebene definieren
+wohingegen dokumenten-orientierte Datenbanken ihre `Felder` auf der `Dokumenten` Ebene definieren.
+Das bedeutet das jedes `Dokument` einer `collection` seine eigenen `Felder` haben kann. (Die sich
+von anderen Dokumenten in der selben `collection` unterscheiden können).
+Einen `collection` ist also ein eher *dummer* container im Vergleich zu einer Tabelle, während in einem `Dokument``
+viel mehr Informatione  als in einer `Zeile` stecken.
 
 
 
