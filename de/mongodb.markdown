@@ -17,8 +17,7 @@ Karl Seguin ist ein Softwareentwickler mit Erfahrung in vielen Bereichen und Tec
 Er ist ein Experte in .Net und Ruby. Des weiteren trägt er semi-aktiv zu OSS Projekten bei, 
 ist technischer Autor und hält gelegentlich Vorträge. 
 Bezogen auf MongoDB war er Kern Entwickler der C# MongoDB Library NoRM, schrieb
-das interaktive tutorial [mongly](http://openmymind.net/mongly/) und entwickelte  
-[Mongo Web Admin](https://github.com/karlseguin/Mongo-Web-Admin). 
+das interaktive tutorial [mongly](http://openmymind.net/mongly/) und entwickelte [Mongo Web Admin](https://github.com/karlseguin/Mongo-Web-Admin). 
 Sein kostenloser service für Spiele Entwickler, [mogade.com](http://mogade.com/), 
 läuft natürlich auf MongoDB.
 
@@ -57,7 +56,7 @@ beisteuern.
 # Einleitung #
  > It's not my fault the chapters are short, MongoDB is just easy to learn.
  
- > Es ist nicht meine Schuld das die Kapitel kurz sind, MongoDB ist eben einfach leicht zu lernen.
+ > Es ist nicht meine Schuld das die Kapitel so kurz sind, MongoDB ist eben einfach leicht zu lernen.
 
 
 Oftmals wird gesagt das sich Technologie rasant entwickelt. Es ist zwar richtig, das die Liste der Technologien 
