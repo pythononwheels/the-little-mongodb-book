@@ -28,7 +28,7 @@ geschrieben
 
 Hier findet ihr seinen blog: <http://openmymind.net>, und seine tweets via [@karlseguin](http://twitter.com/karlseguin)
 
-## With Thanks To ##
+## Mit besonderem Dank an / With Thanks To ##
 Ein besonderes Dankeschön geht an [Perry Neal](http://twitter.com/perryneal) 
 Der mir seine Augen, seinen Verstand und seine Leidenschaft geliehen hat. 
 Deine Hilfe ist unbezahlbar. Ich danke dir.
@@ -48,7 +48,7 @@ Die aktuellen Quellen der deutschen Übersetzung des Buches findet ihr hier:
 
 Und hier findet ihr die jeweils aktuellen PDF, ePub und mobi Versionen.
 
-<http://pythononwheels.org/the-little-mongodb-book>
+<http://pythononwheels.org/post/the_little_mongodb_book>
 
 Anmerkungen zur deutschen Übersetzung (Rechtschreibung, Sprachstil etc.)
 könnt ihr gerne via github, email (khz@tzi.org) oder twitter [@pythononwheels](http://twitter.com/pythononwheels) 
@@ -106,7 +106,7 @@ MongoDB selbst hat Vor- und auch Nachteile, auf die in späteren Kapiteln des Bu
 Wie sie vielleicht schon bemerkt haben, benutzen wir in diesem Buch die Begriffe MongoDB und Mongo als
 Synonyme.
 
-# Getting started #
+# Einstieg / Getting started #
 
 Der grösste Teil des Buches befasst sich mit den MongoDB Kernfunktionen. Deshalb werden wir sehr viel
 mit der MongoDB shell arbeiten. Die shell ist sowohl ein gutes Tool zum lerene als auch zur Administration,
@@ -208,7 +208,92 @@ wohingegen dokumenten-orientierte Datenbanken ihre `Felder` auf der `Dokumenten`
 Das bedeutet das jedes `Dokument` einer `collection` seine eigenen `Felder` haben kann. (Die sich
 von anderen Dokumenten in der selben `collection` unterscheiden können).
 Einen `collection` ist also ein eher *dummer* container im Vergleich zu einer Tabelle, während in einem `Dokument`
-viel mehr Informationen  als in einer `Zeile` stecken.
+deutlich mehr Informationen  als in einer `Zeile` stecken.
+
+Auch wenn es wichtig ist die Unterschiede zu kennen, mpssen sie nicht verzweifeln wenn ihnen jetzt noch nicht
+alles völlig klar ist. Sie werden nicht mehr als eine Handvoll "inserts" brauchen um zu verstgehen was damit 
+wirklich gemeint ist. Letztendlich ist der Hautpaspekt, das eine collection nicht streng vorgiebt, was in ihr
+gespeichert wird (Eine collection ist schema-los). #todo Felder werden für jedes Dokument individuell 
+verfolgt (tracked). 
+Die Vor- und Nachteile dieses Konzeptes werden wir in einem folgenden Kapitel erforschen.
+
+Lassen sie und loslegen. Falls sie es noch nicht getan haben, starten sie jetzt den `mongod` server und die
+mongo shell. Die shell führt Javascript aus. Zusäzlich gibt es auch einige globale Kommandos, wie `help` 
+oder `exit` die sie ausführen können. Kommandos die sie auf die aktuelle Datenbank anwenden, wie
+`db.help()` oder `db.stats()` werden auf das `db` Objekt angewendet (executed against).
+Kommandos die sie auf eine Collection beziehen und solche werden wir häufig verwenden, werden auf
+das `db.COLLECTION_NAME` Object angewendet, so wie z.B.: `db.unicorns.help()` oder `db.unicorns.count()`.
+
+Geben sie nun `db.help()` ein. Als Ausgabe erhalten sie eine Liste aller Kommandos die sie auf das `db` 
+Objekt anwenden können.
+
+Kleine Notiz am Rande. Da es sich bei der mongo shell um eine Javascript shell handelt, sehen sie, wenn 
+sie bei einem Kommando die Klammern `()` weglassen, den Quellcode der Methode anstatt diese auszuführen.
+Ich möchte das nur deshalb hier anmerken, damit sie nicht überrascht sind, wenn ihnen das das erste Mal 
+passiert und sie eine Ausgabe sehen die mit `function (...){` anfängt. 
+Wenn sie jetzt Beispielsweise `db.help`, also ohne die Klammern, eingeben, sehen sie die intere 
+Implementierung der `help` Mehtode.
+
+Als erstes werden wir jetzt die globale Hilfsfunktion `use` benutzen um zwischen verschiedenen Datenbanken 
+zu wechseln. Geben sie jetzt bitte `use learn` ein. Es spielt dabei keine Rolle, das die Datenbank `learn` noch
+nicht existiert. Wenn wir die erste Collection anlegen, wird automatisch auch die Datenbank `learn` erzeugt.
+Da sie sich jetzt im Scope einer Datenbank bewegen können sie in der shell Datenbank Kommandos, wie
+`db.getCollectionNames()` ausführen. Wenn sie dieses Kommando ausführen sollten sie als Ausgabe ein leeres
+Array sehen (`[ ]`). #todo Hier fehlt eigentlich noch ein Wort der Erklärung warum das so ist (Weil eben
+keine Collection existieren) 
+Da Collections Schema-los sind müssen wir sie nicht explizit erzeugen. Es reicht einfach ein Dokument in
+einer Collection anzulegen. Um das zu tun benutzen sie das `insert` Kommando und übergeben als Parameter
+das anzulegende Dokument:
+
+	db.unicorns.insert({name: 'Aurora',
+		gender: 'f', weight: 450})
+
+Das oben aufgeführte Kommando führt ein `insert` auf der `unicorns` collection aus und übergibt ihm
+genau einen Parameter (nämlich das anzulegende Dokument als JSON). Intern verwendet MongoDB ein BSON
+genanntes, serialisiertes, binäres JSON Format.   
+Extern, also für uns, bedeutet das, das wir sehr häufig JSON verwenden werden, wie zum Beispiel bei
+den Methoden Parametern. Wenn sie jetzt `db.getCollectionNames()` noch einmal ausführen, sehen sie 
+zwei collections, nämlich: `unicorns` und `system.indexes`. Die collection `system.indexes` wird
+einmal pro Datenbank angelegt und enthält Informationen über die Indexe dieser Datenbank.
+
+Sie könnne nun das `find` Kommando auf die `unicorns` collection anwenden um eine Liste der Dokumente zu
+erhalten: 
+
+	db.unicorns.find()
+
+Es fällt ihnen vielleicht auf das zusätzlich zu den Attributen die sie definiert haben (name, gender, weight)
+noch ein `_id` Feld existiert. Jedes Dokument in MongoDB muss ein eindeutiges `_id` Feld besitzen. 
+Sie können ein solches Feld selbst definieren, wenn nicht legt MongoDB automatisch ein solches  
+Feld für sie an. In diesem Fall hat das `_id` Feld dann den Datentyp `ObjectId`.
+Meistens werden sie MongoDB das Feld für sich anlegen lassen. Das `_id` Feld wird auch automatisch
+indexiert, was auch erklärt warum die collection `system.indexes` angelegt wurde. 
+Sie können sich den Inhalt der collection nun einmal ansehen:
+
+	db.system.indexes.find()
+
+Als Ausgabe sehen sie den Namen des Index sowie die Datenbank und Collection für die er angelegt wurde.
+Zusätzlich sehen sie auch noch die Felder die indexiert werden.
+
+Nun aber zurück zu unserer Diskussion über schema-lose collections. Fügen sie nun ein völlig anderes Dokument
+in die `unicorns` collection ein. Zum Beispiel:
+
+	db.unicorns.insert({name: 'Leto',
+		gender: 'm',
+		home: 'Arrakeen',
+		worm: false})
+
+
+Benutzen sie nun noch einmal `find` um alle Dokumente aufzulisten. Wenn wir etwas mehr gelernt haben, werden
+wir dieses interessante Verhalten von MongoDB im Detail beleuchten aber ich hoffe das sie jetzt schon sehen
+warum die traditionelle Terminologie hier nicht so gut passt.
+
+## Mastering Selectors / Selektoren meistern ##
+
+
+
+
+ 
+   
 
 
 
