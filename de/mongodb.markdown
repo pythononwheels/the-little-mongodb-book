@@ -220,7 +220,7 @@ Lassen sie uns loslegen. Falls sie es noch nicht getan haben, starten sie jetzt 
 mongo shell. Die shell führt Javascript aus. Zusäzlich gibt es auch einige globale Kommandos, wie `help` 
 oder `exit` die sie ausführen können. Kommandos die sie auf die aktuelle Datenbank anwenden, wie
 `db.help()` oder `db.stats()` werden auf das `db` Objekt angewendet (executed against).
-Kommandos die sie auf eine Collection beziehen und solche werden wir häufig verwenden, werden auf
+Kommandos die sie auf eine Collection beziehen und diese werden wir häufig verwenden, werden auf
 das `db.COLLECTION_NAME` Object angewendet, so wie z.B.: `db.unicorns.help()` oder `db.unicorns.count()`.
 
 Geben sie nun `db.help()` ein. Als Ausgabe erhalten sie eine Liste aller Kommandos die sie auf das `db` 
