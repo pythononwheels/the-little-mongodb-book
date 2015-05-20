@@ -216,7 +216,7 @@ gespeichert wird (Eine collection ist schema-los). #todo Felder werden für jede
 verfolgt (tracked). 
 Die Vor- und Nachteile dieses Konzeptes werden wir in einem folgenden Kapitel erforschen.
 
-Lassen sie und loslegen. Falls sie es noch nicht getan haben, starten sie jetzt den `mongod` server und die
+Lassen sie uns loslegen. Falls sie es noch nicht getan haben, starten sie jetzt den `mongod` server und die
 mongo shell. Die shell führt Javascript aus. Zusäzlich gibt es auch einige globale Kommandos, wie `help` 
 oder `exit` die sie ausführen können. Kommandos die sie auf die aktuelle Datenbank anwenden, wie
 `db.help()` oder `db.stats()` werden auf das `db` Objekt angewendet (executed against).
