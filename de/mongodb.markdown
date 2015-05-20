@@ -41,7 +41,8 @@ The aktuellen Original-Quellen dieses Buches findet ihr unter:
 <http://github.com/karlseguin/the-little-mongodb-book>.
 
 ## Die deutsche Übersetzung ##
-Die deutsche Übersetzung wurde erstellt von Klaas-Henning Zweck.
+Die deutsche Übersetzung wurde erstellt von Klaas-Henning Zweck 
+(twitter: [@pythononwheels](http://twitter.com/pythononwheels) )
 Die aktuellen Quellen der deutschen Übersetzung des Buches findet ihr hier:
 
 <https://github.com/pythononwheels/the-little-mongodb-book>.
@@ -51,8 +52,8 @@ Und hier findet ihr die jeweils aktuellen PDF, ePub und mobi Versionen.
 <http://pythononwheels.org/post/the_little_mongodb_book>
 
 Anmerkungen zur deutschen Übersetzung (Rechtschreibung, Sprachstil etc.)
-könnt ihr gerne via github, email (khz@tzi.org) oder twitter [@pythononwheels](http://twitter.com/pythononwheels) 
-beisteuern.
+könnt ihr am besten via [github issues](https://github.com/pythononwheels/the-little-mongodb-book/issues/new) 
+beisteuern. 
 
 # Einleitung #
  > It's not my fault the chapters are short, MongoDB is just easy to learn.
@@ -231,7 +232,7 @@ Kleine Notiz am Rande. Da es sich bei der mongo shell um eine Javascript shell h
 sie bei einem Kommando die Klammern `()` weglassen, den Quellcode der Methode anstatt diese auszuführen.
 Ich möchte das nur deshalb hier anmerken, damit sie nicht überrascht sind, wenn ihnen das das erste Mal 
 passiert und sie eine Ausgabe sehen die mit `function (...){` anfängt. 
-Wenn sie jetzt Beispielsweise `db.help`, also ohne die Klammern, eingeben, sehen sie die intere 
+Wenn sie jetzt Beispielsweise `db.help`, also ohne die Klammern, eingeben, sehen sie die interne 
 Implementierung der `help` Mehtode.
 
 Als erstes werden wir jetzt die globale Hilfsfunktion `use` benutzen um zwischen verschiedenen Datenbanken 
