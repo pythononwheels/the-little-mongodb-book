@@ -98,19 +98,17 @@ Datenverarbeitung nutzen.
 Kurz gesagt geht es beinm Thema NoSQL um Offenheit und Bewusstsein für Alternative, existierende und neue Muster
 und Tools um Daten zu Verwalten.
 
-Jetzt fragen sie sich sicherlich wie nun MongoDB in all dies hineinpasst. Als Dokumentenorientierte Datenbank (DB)
+Jetzt fragen sie sich sicherlich wie nun MongoDB in all dies hineinpasst. Als dokumentenorientierte Datenbank (DB)
 ist MongoDB ein sehr breit einsetzbares (generalized) NoSQL System. Es sollte als eine Alternative zu relationalen
 Datenbanksystemen (RDB) betrachtet werden. Wie auch bei RDB Systemen kann MongoDB davon profitieren, wenn man
-es mit einem etwas speziellerne NoSQL System für bestimmte Bereiche kombiniert.
-MongoDB selbst hat Vor- und auch Nachteile, auf die in späteren Kapiteln des Buches eingegangen wird.
-
-Wie sie vielleicht schon bemerkt haben, benutzen wir in diesem Buch die Begriffe MongoDB und Mongo als
-Synonyme.
+es mit anderen, NoSQL Systemen für spezielle Bereiche kombiniert (Anm d. Übers.: Beispielsweise Redis für
+schnelle Suchen der Top 1000 Artikel o.ä.). 
+MongoDB selbst hat natürlich Vor- und Nachteile, auf die in späteren Kapiteln des Buches eingegangen wird.
 
 # Einstieg / Getting started #
 
-Der grösste Teil des Buches befasst sich mit den MongoDB Kernfunktionen. Deshalb werden wir sehr viel
-mit der MongoDB shell arbeiten. Die shell ist sowohl ein gutes Tool zum lerene als auch zur Administration,
+Der grösste Teil des Buches befasst sich mit den Kernfunktionen von MongoDB. Deshalb werden wir sehr viel
+mit der MongoDB shell arbeiten. Die shell ist sowohl ein gutes Tool zum lernen als auch zur Administration,
 zum Ausführen ihrer Programme benötigen sie jedoch auch einen MongoDB Treiber.
 
 Das bringt uns zur ersten Sache die sie über MongoDB lernen sollten: die MongoDB Treiber. MonmgoDB hat
@@ -467,6 +465,7 @@ bisschen zugenommen hat, sollten wir vielleicht folgendes `update` anwenden:
 (Wenn sie schon etwas mit ihrer `unicorn` collection herumgespielt haben und diese nicht mehr dem
 originale Datenbestand entspricht, dann können sie sie jetzt einfach löschen und mit den Daten aus
 Kapitel 1 per Cut&Paste wieder in den Originalzustand bringen)
+
 
  
 
