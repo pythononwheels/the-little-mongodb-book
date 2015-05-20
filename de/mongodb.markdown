@@ -65,8 +65,8 @@ Oftmals wird gesagt das sich Technologie rasant entwickelt. Es ist zwar richtig,
 und Techniken immer länger wird, aber ich war immer der Meinung das die fundamentalen Methoden und Technologien 
 für Softwareentwickler sich eher langsam entwickeln. Man kann Jahre damit verbringen eine kleine, aber
 wichtige Technik zu erlernen.
-Auffällig ist jedoch, mit welcher Geschwindigkeit (heute) Technologien ersetzt werden. Scheinbar über Nacht wird  
-etabliertes von einer veränderten Ausrichtung des Entwickler-Fokus bedroht.
+Auffällig ist jedoch, mit welcher Geschwindigkeit (heute) Technologien ersetzt werden. Scheinbar 
+über Nacht wird etabliertes von einer veränderten Ausrichtung des Entwickler-Fokus bedroht.
 
 Nichts könnte repräsentativer für diesen plötzlichen Wandel sein als der Erfolg der NoSQL Technologien gegen
 die sehr gut etablierte Basis der relationalen Datenbanken (RDBMS). 
