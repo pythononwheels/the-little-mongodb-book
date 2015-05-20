@@ -290,6 +290,197 @@ warum die traditionelle Terminologie hier nicht so gut passt.
 
 ## Mastering Selectors / Selektoren meistern ##
 
+Zusätzlich zu den sechs Konzepten die wir untersucht haben (#todo kommt mir irgendwie weniger vor) gibt es
+einen Aspekt für den sie ein gutes Verständnis haben sollten, bevor wir uns weiterführenden Themen zuwenden:
+Abfrage Selektoren (query selectors). Ein MongoDB query selector ist mit dem `where` (clause) eines 
+SQL Statements zu vergleichen.
+Sie benutzen ihn wenn sie Dokumente finden, zählen, updaten oder aus einer collection entfernen wollen. 
+Ein selector ist ein JSON Objekt. Im einfachsten Fall entspricht er `{}` was auf alle Dokumente einer
+collection zutirfft. Wenn wir Beispielsweise alle weiblichen `unicorns` finden wollen, müssten wir `{gender:'f'}`
+angeben.
+
+Bevor wir zu tief in Selektoren abtauchen lassen sie uns einige Daten anlegen mit denen wir spielen können.
+Als erstes löschen sie bitte alles was wir bisher in der `unicorns` collection angelegt haben mit:  
+`db.unicorns.remove({})`. Führen sie jetzt bitte die folgenden inserts aus um unsere Spieldaten anzulegen
+(Ich schlage vor das sie das mit Copy&Paste machen):
+
+	db.unicorns.insert({name: 'Horny',
+		dob: new Date(1992,2,13,7,47),
+		loves: ['carrot','papaya'],
+		weight: 600,
+		gender: 'm',
+		vampires: 63});
+	db.unicorns.insert({name: 'Aurora',
+		dob: new Date(1991, 0, 24, 13, 0),
+		loves: ['carrot', 'grape'],
+		weight: 450,
+		gender: 'f',
+		vampires: 43});
+	db.unicorns.insert({name: 'Unicrom',
+		dob: new Date(1973, 1, 9, 22, 10),
+		loves: ['energon', 'redbull'],
+		weight: 984,
+		gender: 'm',
+		vampires: 182});
+	db.unicorns.insert({name: 'Roooooodles',
+		dob: new Date(1979, 7, 18, 18, 44),
+		loves: ['apple'],
+		weight: 575,
+		gender: 'm',
+		vampires: 99});
+	db.unicorns.insert({name: 'Solnara',
+		dob: new Date(1985, 6, 4, 2, 1),
+		loves:['apple', 'carrot',
+			'chocolate'],
+		weight:550,
+		gender:'f',
+		vampires:80});
+	db.unicorns.insert({name:'Ayna',
+		dob: new Date(1998, 2, 7, 8, 30),
+		loves: ['strawberry', 'lemon'],
+		weight: 733,
+		gender: 'f',
+		vampires: 40});
+	db.unicorns.insert({name:'Kenny',
+		dob: new Date(1997, 6, 1, 10, 42),
+		loves: ['grape', 'lemon'],
+		weight: 690,
+		gender: 'm',
+		vampires: 39});
+	db.unicorns.insert({name: 'Raleigh',
+		dob: new Date(2005, 4, 3, 0, 57),
+		loves: ['apple', 'sugar'],
+		weight: 421,
+		gender: 'm',
+		vampires: 2});
+	db.unicorns.insert({name: 'Leia',
+		dob: new Date(2001, 9, 8, 14, 53),
+		loves: ['apple', 'watermelon'],
+		weight: 601,
+		gender: 'f',
+		vampires: 33});
+	db.unicorns.insert({name: 'Pilot',
+		dob: new Date(1997, 2, 1, 5, 3),
+		loves: ['apple', 'watermelon'],
+		weight: 650,
+		gender: 'm',
+		vampires: 54});
+	db.unicorns.insert({name: 'Nimue',
+		dob: new Date(1999, 11, 20, 16, 15),
+		loves: ['grape', 'carrot'],
+		weight: 540,
+		gender: 'f'});
+	db.unicorns.insert({name: 'Dunx',
+		dob: new Date(1976, 6, 18, 18, 18),
+		loves: ['grape', 'watermelon'],
+		weight: 704,
+		gender: 'm',
+		vampires: 165});
+
+Jetzt wo wir endlich Daten haben, können wir auch die Selektoren meistern. Der Selektor `{field: value}` findet
+(matched) alle Dokumente bei denen `field`den Wert `value` hat.  Mit `{field1: value1, field2: value2}` können
+sie eine UND Verknüpfung abbilden. 
+Die speziellen Operartoren: `$lt`, `$lte`, `$gt`, `$gte` and `$ne` enstprechen less than (<), 
+less than or equal (<=), greater than (>), greater than or equal (>=) and not equal (!=). Um Beispielweise 
+alle männlchen `unicorns` zu finden die mehr als 700 Pfund wiegen müssten wir folgenden Abfrage ausführen:
+
+	db.unicorns.find({gender: 'm',
+		weight: {$gt: 700}})
+	//or (not quite the same thing, but for
+	//demonstration purposes)
+	db.unicorns.find({gender: {$ne: 'f'},
+		weight: {$gte: 701}})
+
+Der `$exists` Operator wird benutzt um die Existenz eines Feldes zu prüfen. Die folgende Abfrage 
+sollte genau ein Dokument zurückliefern:
+
+	db.unicorns.find({
+		vampires: {$exists: false}})
+		
+Der `$in` Operator wird benutzt um eines von mehreren Elementen eines Arrays zu treffen (match).
+Die folgende Abfrage liefert alle `unicorns` bei denen loves entweder apple oder orange entspricht.
+
+    db.unicorns.find({
+    	loves: {$in:['apple','orange']}})
+		
+Wenn sie eine ODER Verknüpfung anstelle einer UND Verknüpfung auf verschiedene Felder anwenden wollen, so
+können sie den `$or` Operator auf ein Array von Selektoren anwenden. (Das ist einfacher als es klingt):
+
+	db.unicorns.find({gender: 'f',
+		$or: [{loves: 'apple'},
+			  {weight: {$lt: 500}}]})
+
+Die obrige Abfrage liefert alle weiblichen (gender: 'f') unicorns die entweder apple lieben oder
+weniger als 500 Pfund wiegen.
+
+Es gibt da ein nettes kleines Detail in den letzten beiden Beispielen das ihnen vielleicht sogar schon 
+aufgefallen ist. Das `loves` Feld ist ein Array und MongoDB unterstützt Arrays als Objekte erster Klasse 
+(first class Objects). Das ist ein unglaublich nützliches feature. Wenn sie es erstmal vwerwenden werden 
+sie sich schnell fragen wie sie jemals ohne ausgekommen sind.
+Was vielleicht noch interessanter ist, wie leicht sie eine Abfrage auf einem Array machen können: 
+`{loves: 'watermelon'}` gitb alle Dokumente zurück bei denen der Wert `watermelon` im `loves` Array des 
+Dokumentes vorkommt.
+
+Es gibt in M ongoDB noch mehr Operatoren als wir bisher betrachtet haben. Diese werden ausführlich im 
+Query Selectors](http://docs.mongodb.org/manual/reference/operator/query/#query-selectors) Kapitel des
+MongoDB Handbuches beschrieben. Was wir bisher behandelt haben sind die Grundlagen die sie für den Start
+benötigen. Im Grunde ist es aber auch das, was sie später meistens benötgen werden.
+
+Wir haben gesehen wie sie Selektoren mit dem `find` Kommando verwenden können. Sie könnne sie auch
+auf das `remove` Kommando anwenden, was wir ein bisschen betrachtet haben. Des weiteren könnne sie sie
+auch auf das `count` Kommando anwenden, was wir bisher nicht angesehn haben sowie auf das `update` Kommando,
+mit dem wir später noch einige Zeit verbringen werden.
+
+Die `ObjectId` die MongoDB für uns angelegt hat, kann wie folgt selektiert (selected) werden:
+
+	db.unicorns.find(
+		{_id: ObjectId("TheObjectId")})
+
+## in diesem Kapitel / In This Chapter ##
+Wir haben bisher weder auf `update` geschaut noch auf einige der ausgefalleneren (fancier) Sachen die 
+man mit `find` machen kann. Aber wir haben MongoDB gestartet und haben uns kurz mit den `insert` und
+`remove` Kommandos beschäftigt (Bei denen es aber auch nicht viel mehr zu sehen gibt).
+Wir haben auch `find` kennen gelernt und haben gesehen was es mit MongoDB Selektoren auf sich hat. Wir
+hatten einen guten Start und haben eine gute Grundlage für das gelegt was noch kommt.
+Ob sie es glauben oder nicht, sie wissen tatsächlich beinahe schon alles was sie wissen müssen um mit
+MongoDB zu starten - Es ist wirklich schnell zu lernen und einfach zu benutzen. 
+Ich möchte sie an dieser Stelle ermuntern noch ein wenig mit MongoDB zu spielen bevor sie 
+weiterlesen. Fügen sie verschiedenen Dokumente, vielleicht in unterschiedliche collections, ein und
+werden sie ein bisschen vertrauter mit verschiedenen Selektoren. Benutzen sie einfach `find`, `count` 
+und `remove`. 
+Nach ein paar eigenen Versuchen wird sich viel unklares von selbst (er)klären.
+
+# Kapitel 2 - Updating / Chapter 2 - Updating #
+In Kapitel 1 haben wir drei der vier CRUD (create, read, update and delete) Operationen eingeführt.
+Dieses Kapitel ist der bisher ausgelassenen `update` Operation gewidmet. #todo `Update` hat einige
+überraschende Funktionen (behaviors) die es Wert machen der Operation ein eigenes Kapitel zu widmen.
+
+## Update: Replace Versus $set ##
+
+In seiner einfachsten Form werden `update` zwei Parameter übergeben: der Selektor (where) worauf
+update anzuwenden ist und welche updates auf Felder erfolgen sollen. Wenn also Roooooodles ein 
+bisschen zugenommen hat, sollten wir vielleicht folgendes `update` anwenden:
+
+	db.unicorns.update({name: 'Roooooodles'},
+		{weight: 590})
+
+(Wenn sie schon etwas mit ihrer `unicorn` collection herumgespielt haben und diese nicht mehr dem
+originale Datenbestand entspricht, dann können sie sie jetzt einfach löschen und mit den Daten aus
+Kapitel 1 per Cut&Paste wieder in den Originalzustand bringen)
+
+ 
+
+
+
+
+  
+
+
+
+
+
+
+  
 
 
 
