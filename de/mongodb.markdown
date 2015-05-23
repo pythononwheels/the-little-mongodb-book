@@ -527,8 +527,8 @@ Situationen ist manchmal sehr nützlich `upserts` zu haben, sie werden es merken
 wenn solch ein Fall eintritt. Um `upserts` zu aktivieren übergeben sie `update` den 
 dritten Paramter `{upsert:true}`.
 
-Ein einfasches Beispiel ist ein Aufrufzähler (hitcounter) auf einer Website. Wenn wir
-einen aufsummierten Echtzeit Gesamt-Aufrufzähler haben wollem, müssten wir prüfen
+Ein einfaches Beispiel ist ein Aufrufzähler (hitcounter) auf einer Website. Wenn wir
+einen aufsummierten Echtzeit hitcounter haben wollem, müssten wir prüfen
 ob es bereits einen solchen Datensatz gibt und dann Entscheiden ob wir einen neuen anlegen
 oder den bestehenden erhöhen. Ohne die `upsert` Option (oder wenn diese als false 
 deklariert wird), würde das folgende Statement nichts verändern:
