@@ -466,6 +466,90 @@ bisschen zugenommen hat, sollten wir vielleicht folgendes `update` anwenden:
 originale Datenbestand entspricht, dann können sie sie jetzt einfach löschen und mit den Daten aus
 Kapitel 1 per Cut&Paste wieder in den Originalzustand bringen)
 
+Wenn wir uns jetzt den upgedateten Datensatz ansehen:
+
+	db.unicorns.find({name: 'Roooooodles'})
+
+Dann sollten sie auch die erste Überraschung bei `update` erleben. #todo Die Abfrage liefert kein 
+Dokument zurück, da der zweite Parameter den wir übergeben haben keinen Update Operator hat,
+weshalb das Dokument in diesem Fall **ersetzt** (**replaced**) wurde.
+Anders gesagt, das `update` hat ein Dolukent über das Feld `name` gefunden und dann das gesamte
+Dokument durch das neue Dokument (eben den zweiten Parameter) ersetzt. Es gibt in SQL
+keine vergleichbare Funktion des `update` Kommandos. In einigen Situationen ist dieses Verhalten 
+ideal um einige seht dynamische updates zu ermöglichen. Wenn sie hingegen den Wert eines oder
+mehrere Felder ändern wollen, dann müssen sie MongoDB`s `$set` Operator verwenden.
+Führen sie nun das folgende Kommando aus um die verlorenen Felder wieder her zu stellen: 
+
+	db.unicorns.update({weight: 590}, {$set: {
+		name: 'Roooooodles',
+		dob: new Date(1979, 7, 18, 18, 44),
+		loves: ['apple'],
+		gender: 'm',
+		vampires: 99}})
+
+Dieses Kommando überschreibt das Feld `weight` nicht, da wir es nicht expizit angegeben haben.
+Wenn sie jetzt folgendes ausführen:
+
+	db.unicorns.find({name: 'Roooooodles'})
+
+Erhalten wir auch das erwartete Ergebnis. Daher ist der richtige Weg um ein update auf dem
+Feld weight durchzuführen:
+
+	db.unicorns.update({name: 'Roooooodles'},
+		{$set: {weight: 590}})
+
+## Update Operatoren / Update Operators ##
+Zusätzlich zu `$set` können wir auch noch mit anderen Kommandos einige nette Dinge machen. 
+update Operatoen arbeiten auf Feldern - so das nicht ihr gesamtes Dokument gelöscht wird.
+(#todo hier muss man update eigentlich anders nennen). Den `$inc` Operator können sie
+Beispielsweise verwenden um ein Feld um einen positiven oder negativen zu erhöhen.
+Wenn wir Pilot zum Beispiel fälschlicherweise einige Vampirtötungen angerechnet haben,
+können wir das mit folgendem Kommando berichtigen:
+
+	db.unicorns.update({name: 'Pilot'},
+		{$inc: {vampires: -2}})
+
+Wenn Aurora plötzlich ein failble für Süsses entwickelt, könnte wir mittels des
+`$push` Operators einen neuen Wert zu ihre `loves` Feld hinzufügen:
+
+	db.unicorns.update({name: 'Aurora'},
+		{$push: {loves: 'sugar'}})
+
+Mehr Informationen über die verfügbaren Update Operatoren finden sie im [Update Operators]
+(http://docs.mongodb.org/manual/reference/operator/update/#update-operators) Kapitel
+den MongoDB Handbuchs.
+
+## Upserts ##
+Eine der angenehmsten Überraschungen bei der Verwendung von`update` ist, das es 
+`upserts` voll unterstützt. Ein `upsert` führt ein `update` auf einem Dokument durch,
+wenn es ein entsprechendes Dokument findet und ein `insert` wenn nicht. In bestimmten 
+Situationen ist manchmal sehr nützlich `upserts` zu haben, sie werden es merken 
+wenn solch ein Fall eintritt. Um `upserts` zu aktivieren übergeben sie `update` den 
+dritten Paramter `{upsert:true}`.
+
+Ein einfasches Beispiel ist ein Aufrufzähler (hitcounter) auf einer Website. Wenn wir
+einen aufsummierten Echtzeit Gesamt-Aufrufzähler haben wollem, müssten wir prüfen
+ob es bereits einen solchen Datensatz gibt und dann Entscheiden ob wir einen neuen anlegen
+oder den bestehenden erhöhen. Ohne die `upsert` Option (oder wenn diese als false 
+deklariert wird), würde das folgende Statement nichts verändern:
+
+	db.hits.update({page: 'unicorns'},
+		{$inc: {hits: 1}});
+	db.hits.find();
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
 
  
 
