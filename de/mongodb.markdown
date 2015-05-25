@@ -537,6 +537,52 @@ deklariert wird), würde das folgende Statement nichts verändern:
 		{$inc: {hits: 1}});
 	db.hits.find();
 
+Wenn wir allerdings die `upsert` Option aktivieren sehen die Ergebnisse ziemlich anders aus:
+
+	db.hits.update({page: 'unicorns'},
+		{$inc: {hits: 1}}, {upsert:true});
+	db.hits.find();
+
+Da kein Dokument existiert bei dem das Feld `page` den Wert `unicorns` hat, wird ein neues
+Dokument (in die Collection) eingefügt. Wenn wir das obige Kommando noch einmal audführen,
+wird das (jetzt) existierende Dokument upgedated und `hits` wird auf 2 erhöht.
+
+	db.hits.update({page: 'unicorns'},
+		{$inc: {hits: 1}}, {upsert:true});
+	db.hits.find();
+
+## Mehrfach Updates / Multiple Updates ##
+Die letzte Überraschung die `update` zu bieten hat ist, das immer nur ein Dokument updedated 
+wird. Das erscheint ziemlich logisch für die Beispiele die wir bisher angesehen haben. Wenn 
+sie aber Beispielsweise folgendes Statement ausführen:
+
+	db.unicorns.update({},
+		{$set: {vaccinated: true }});
+	db.unicorns.find({vaccinated: true});
+
+Würden sie wahrscheinlich erwarten das alle `unicorns` geimpft (`vaccinated`) sind. Um
+das (erwartete) Verhalten zu erreichen müssen sie allerdings die `multi` Option auf True setzen:
+
+	db.unicorns.update({},
+		{$set: {vaccinated: true }},
+		{multi:true});
+	db.unicorns.find({vaccinated: true});
+
+## In desem Kapitel / In This Chapter ##
+Mit diesem Kapitel beenden wir die Einführung in die einfachen CRUD Operationen auf collections.
+Wir haben uns `update` im Detail angeschaut und drei interesante Verhaltensweisen fevstgestellt.
+Erstens: wenn sie ein Dokumet ohne update Operatoren übergeben, wird das gesamte Dokumet ersetzt.
+(MongoDB's `update` will replace the existing document)
+
+
+
+
+
+
+
+
+
+
 
 
 
