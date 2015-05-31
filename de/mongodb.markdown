@@ -570,9 +570,38 @@ das (erwartete) Verhalten zu erreichen müssen sie allerdings die `multi` Option
 
 ## In desem Kapitel / In This Chapter ##
 Mit diesem Kapitel beenden wir die Einführung in die einfachen CRUD Operationen auf collections.
-Wir haben uns `update` im Detail angeschaut und drei interesante Verhaltensweisen fevstgestellt.
-Erstens: wenn sie ein Dokumet ohne update Operatoren übergeben, wird das gesamte Dokumet ersetzt.
-(MongoDB's `update` will replace the existing document)
+Wir haben uns `update` im Detail angeschaut und drei interessante Verhaltensweisen festgestellt.
+Erstens: wenn sie ein Dokument ohne update Operatoren übergeben, wird das gesamte Dokument ersetzt.
+(MongoDB's `update` will replace the existing document). Deshalb werden sie normalerweise den `$set` 
+Operator verwenden (oder einen der vielen anderen Operatoren die das Dokument verändern (und nicht ersetzen)).
+Zweitens bietet `update` eine intuitive `upsert` Option die besonders hilfreich ist, wenn sie nicht
+genau wissen ob das Dokument bereits exisitiert. Drittens und letztens wird durch `update` nur das
+erste gefundene Dokument geändert. Wenn sie alle Dokumente auf einmal ändern wollen müssen sie
+die `multi` Option verwenden.
+
+# Kapitel 3 - Mastering Find #
+In Kapitel eins haben wir einen Überblick über das `find` Kommando gegeben. Es gibt aber noch mehr
+im Bezug auf `find` als Selektoren. Wir haben bereits erwähnt, das das Ergebnis von `find` ein `cursor` 
+ist. Wir werden jetzt einmal genauer betrachten was das im Detail bedeutet.
+
+## Feld Selektion / Field Selection ##
+Bevor wir uns weiter mit `cursorn` beschäftigen sollten sie wissen das `find` einen optionalen zweiten
+Parameter Namens `projection` hat. Dieser Parameter enthält die Liste der Felder die wir ein- oder 
+ausschliessen wollen. Wenn sie beispielsweise nur die Namen der `unicorns`, ohne die anderen Felder,
+erhalten wollen, führen sie folgendes Kommandfo aus:
+
+	db.unicorns.find({}, {name: 1});
+
+Das `_id` Feld wird standardmässig immer elas Ergebnis zurückgeliefert. Sie können es explizit mit
+folgender Anweisung ausschliessen: `{name:1, _id: 0}`.
+
+Sie können Inklusion und Exklusion in der selben Anweiseung nur beim `_id` Feld mischen. Bei anderen 
+Feldern ist dies nicht möglich. Wenn man darüber einmal nachdenk ergibt dies auch Sinn. 
+Man möchte Felder entweder explizit selektieren (inlcude) oder ausschliessen (exclude).
+
+## Ordnen / Ordering ##
+Ich habe bereits ein paar Mal erwähnt das `find` einen cursor zurückliefert, dessen Ausführung 
+so lange verzögert wird, bsi sie wirklich benötigt wird.
 
 
 
