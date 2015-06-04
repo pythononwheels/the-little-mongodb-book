@@ -602,7 +602,7 @@ Man möchte Felder entweder explizit selektieren (inlcude) oder ausschliessen (e
 ## Ordnen / Ordering ##
 Ich habe bereits ein paar Mal erwähnt das `find` einen cursor zurückliefert, dessen Ausführung 
 so lange verzögert wird, bis sie wirklich benötigt wird. Während der Benutzung der Shell werden sie
-hingegen bemerkt haben, das `find` direkt (also nich verzögert) ausgeführt wird. Dieses Verhalten ist
+hingegen bemerkt haben, das `find` direkt (also nicht verzögert) ausgeführt wird. Dieses Verhalten ist
 allerdings spezifisch für die Shell.  
 Um das echte Verhalten der `cursor` zu untersuchen können wir uns einige der Methoden ansehen, die
 sich mit `find` verketten (chained to find) lassen. Die erste dieser Methoden die wir untersuchen wollen
@@ -617,18 +617,18 @@ ist `sort`. Wir spezifizieren die Felder nach denen wir sortieren wollen als JSO
 	db.unicorns.find().sort({name: 1,
 		vampires: -1})
 
-Wie bei relationalen Datenbanken kann MongoDB auch eine Index zur (A.d.Ü.: Optimierung der) Sortierung 
-verwenden. Wir werden Indexe später noch genauer betrachten. Sie sollten allerdings wisse, das MongoDB
+Wie bei relationalen Datenbanken kann MongoDB auch einen Index zur (A.d.Ü.: Optimierung der) Sortierung 
+verwenden. Wir werden Indexe später noch genauer betrachten. Sie sollten allerdings wissen, das MongoDB
 die Grösse eines sort ohne Index begrenzt. Das bedeutet, das sie eine Fehlermeldung erhalten, wenn 
 sie sehr grosse Ergebnismengen sortieren wollen, ohne einen Index zu verwenden.
 Manche sehen das als Limitierung an, ich würde es jedoch ehrlicherweise begrüssen, wenn noch mehr
 Datenbanken nicht optimierte queries unterbinden würden. ( Ich werde jetzt nicht jeden MongoDB
-Nachteil ins positive verkehren aber ich habe genug armselig optimierte Datenbanken gesehn bei denen
+Nachteil ins positive verkehren aber ich habe genug armselig optimierte Datenbanken gesehen bei denen
 ich mir gewünscht hätte das sie einen stricten Modus gehabt hätten.)
 
 ## Blättern / Paging ##
 Paging von Ergebnissen kann mit den `limit` und `skip` cursor Methoden erreicht werden. Um also das
-zweit- und drittschwerste unicorn zu finden könnten wir also folgendes ausführen:
+zweit- und drittschwerste unicorn zu finden könnten wir folgendes ausführen:
 
 	db.unicorns.find()
 		.sort({weight: -1})
