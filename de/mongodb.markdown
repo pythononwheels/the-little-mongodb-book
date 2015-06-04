@@ -604,7 +604,59 @@ Ich habe bereits ein paar Mal erwähnt das `find` einen cursor zurückliefert, d
 so lange verzögert wird, bis sie wirklich benötigt wird. Während der Benutzung der Shell werden sie
 hingegen bemerkt haben, das `find` direkt (also nich verzögert) ausgeführt wird. Dieses Verhalten ist
 allerdings spezifisch für die Shell.  
+Um das echte Verhalten der `cursor` zu untersuchen können wir uns einige der Methoden ansehen, die
+sich mit `find` verketten (chained to find) lassen. Die erste dieser Methoden die wir untersuchen wollen
+ist `sort`. Wir spezifizieren die Felder nach denen wir sortieren wollen als JSON Dokument, wobei wie
+1 für aufsteigende- und -1 für absteigende Sortierung angeben. Zum Beispiel:
 
+ 
+	//heaviest unicorns first
+	db.unicorns.find().sort({weight: -1})
+
+	//by unicorn name then vampire kills:
+	db.unicorns.find().sort({name: 1,
+		vampires: -1})
+
+Wie bei relationalen Datenbanken kann MongoDB auch eine Index zur (A.d.Ü.: Optimierung der) Sortierung 
+verwenden. Wir werden Indexe später noch genauer betrachten. Sie sollten allerdings wisse, das MongoDB
+die Grösse eines sort ohne Index begrenzt. Das bedeutet, das sie eine Fehlermeldung erhalten, wenn 
+sie sehr grosse Ergebnismengen sortieren wollen, ohne einen Index zu verwenden.
+Manche sehen das als Limitierung an, ich würde es jedoch ehrlicherweise begrüssen, wenn noch mehr
+Datenbanken nicht optimierte queries unterbinden würden. ( Ich werde jetzt nicht jeden MongoDB
+Nachteil ins positive verkehren aber ich habe genug armselig optimierte Datenbanken gesehn bei denen
+ich mir gewünscht hätte das sie einen stricten Modus gehabt hätten.)
+
+## Blättern / Paging ##
+Paging von Ergebnissen kann mit den `limit` und `skip` cursor Methoden erreicht werden. Um also das
+zweit- und drittschwerste unicorn zu finden könnten wir also folgendes ausführen:
+
+	db.unicorns.find()
+		.sort({weight: -1})
+		.limit(2)
+		.skip(1)
+
+`limit` zusammen mit `sort` zu verwenden kann ein guter Ansatz sein um Probleme beim sortieren von Feldern
+ohne Index zu vermeiden. 
+
+## Zählen / Count ##
+In der shell ist es möglich `count` direkt auf einer `collection` auszuführen.
+
+	db.unicorns.count({vampires: {$gt: 50}})
+
+Tatsächlich ist `count` eigentlich eine `cursor` Methode, für die die shell lediglich einen shortcut
+bietet. Bei Treibern die diesen shortcut nicht anbieten muss der Aufruf folgendermassen durchgeführt 
+werden (das funktioniert natürlich aus genauso in der shell):
+
+	db.unicorns.find({vampires: {$gt: 50}})
+		.count()
+
+## In diesem Kapitel/  In This Chapter ##
+Die Anwendung von `find` und `cursors` ist ein ziemlich gradliniger Ansatz. Es gibt noch ein paar
+weitere Kommandos die wir entweder später weiter behandeln oder die nur eher seltene Fälle betreffen. 
+Sie können sich jedoch bereits in der MongoDB shell zu Hause fühlen und haben ein gutes Verständnis der
+MongoDB Grundlagen.
+
+# Kapitel 4 Daten Modellierung / Chapter 4 - Data Modeling #
 
 
 
