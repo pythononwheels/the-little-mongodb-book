@@ -601,7 +601,9 @@ Man möchte Felder entweder explizit selektieren (inlcude) oder ausschliessen (e
 
 ## Ordnen / Ordering ##
 Ich habe bereits ein paar Mal erwähnt das `find` einen cursor zurückliefert, dessen Ausführung 
-so lange verzögert wird, bsi sie wirklich benötigt wird.
+so lange verzögert wird, bis sie wirklich benötigt wird. Während der Benutzung der Shell werden sie
+hingegen bemerkt haben, das `find` direkt (also nich verzögert) ausgeführt wird. Dieses Verhalten ist
+allerdings spezifisch für die Shell.  
 
 
 
