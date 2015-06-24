@@ -657,11 +657,19 @@ Sie können sich jedoch bereits in der MongoDB shell zu Hause fühlen und haben 
 MongoDB Grundlagen.
 
 # Kapitel 4 Daten Modellierung / Chapter 4 - Data Modeling #
+Lassen sie uns an dieser Stelle mal die Gangart wechseln und etwas abstrakter über MongoDB sprechen.
+Ein paar neue Begriffe und syntaktische Strukturen einzuführen ist eher trivial. Die Wahrheit ist, das
+die meisten von uns am besten herausfinden was funktioniert und was nicht, wenn sie wirklich mit diesen 
+Technologien arbeiten.
+Wir können hier zwar viel theoretisch darüber sprechen aber letztendlich lernt man am besten wenn 
+man das ganze auch pratisch anwendet und wirklich programmiert.
 
+Von allen NoSQL Datenbanken sind die Dokument orientierten ('document-oriented') wharscheinlich diejenigen,
+die den relationalen Datenbanken am ähnlichsten sind, zumindest in der Datenmodellierung. Die 
+exisitierenden Unterschiede sind aber wichtig.
 
-
-
-
+## No Joins / Keine Joins ##
+ 
 
 
 
