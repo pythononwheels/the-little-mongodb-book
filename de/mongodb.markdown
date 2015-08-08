@@ -669,7 +669,112 @@ die den relationalen Datenbanken am ähnlichsten sind, zumindest in der Datenmod
 exisitierenden Unterschiede sind aber wichtig.
 
 ## No Joins / Keine Joins ##
+Der fundamentalste Unterschied an den sie sich bei MongoDB gewöhnen müssen ist wahrscheinlich das 
+Fehlen von joins. Ich weiss nicht genau warum MongoDB keinerlei join-Syntax unterstützt aber ich 
+weiss das joins generell als nicht skalierend betrachtewt werden. Das bedeutet, wenn sie ihre
+Daten horizontal splitten, werde sie ihre joins im Application-Server implementieren.
+Ohne die Gründe weiter zu hinterfragen, Daten sind relational (stehen im Bezug zueinander) und 
+MongoDB unsterstützt keine joins. 
+
+Sie werden also joins in ihrem Appliction code bauen müssen. Im Wesentlichen müssen wir eine 
+zweite Suche ausführen um die relevanten Daten in einer anderen Collention zu finden. 
+Unsere Daten enstsprechend zu definiren unterscheidet sich nicht von der Definition eines
+foreign-key in einer relationalen Datenbank.
+Lassen sie uns zu diesem Zweck mal den Fokus weg von den `unicorns` und hin zu den `employees`
+lenken.
+Das Erste was wir machen müssen ist eine `employee` zu erzeugen (Ich gebe hier eine explizite
+`_id` an um kohärente Beispiele zu ermöglichen) #todo: einfacher formulieren.
+
+	db.employees.insert({_id: ObjectId(
+		"4d85c7039ab0fd70a117d730"),
+		name: 'Leto'})
+
+Jetzt fügen wir einige weitere `employees` hinzu und setzen ihren Manager auf `Leto`:
+
+	db.employees.insert({_id: ObjectId(
+		"4d85c7039ab0fd70a117d731"),
+		name: 'Duncan',
+		manager: ObjectId(
+		"4d85c7039ab0fd70a117d730")});
+	db.employees.insert({_id: ObjectId(
+		"4d85c7039ab0fd70a117d732"),
+		name: 'Moneo',
+		manager: ObjectId(
+		"4d85c7039ab0fd70a117d730")});
+
+Ich möchte hier nochmal wiederholen das `_id` jeden beliegen Wert annehmen kann. Da man
+aber in der Praxis eigentlich immer `ObjectId`s verwednert machen wir das hier auch so.
+
+Um alle `employees` von Leto zu finden muss man folgende Suche ausführen:
+
+	db.employees.find({manager: ObjectId(
+		"4d85c7039ab0fd70a117d730")})
+
+Daran ist nicths magisches. Im schlimmsten Fall muss man eine extra query ausführen, die 
+allerdings indexiert ist (sie sollten immer einen Index auf ihre Hauptsuchattribute legen)
+
+## Arrays und eingebettete Dokumente / Arrays and embedded documents ##
+MongoDB hat zwar keine joins, hat dafür aber ein paar andere Asse im Ärmel. Erinnern
+sie sich noch das MongoDB Arrays als `first-class` Objekte in Dokumenten unterstützt?
+Das ist unglaublich praktisch wenn man mit `many-to-one` oder `many-to-many` 
+relationships zu tun hat. (Anm: und das ist ja wirklich häfig der Fall). Ein einfaches
+Beispiel ist der Fall das ein `employee` zwei Manager hat. In diesem Fall können wir 
+die Manager einfach in einem Array speichern.
+
+	db.employees.insert({_id: ObjectId(
+		"4d85c7039ab0fd70a117d733"),
+		name: 'Siona',
+		manager: [ObjectId(
+		"4d85c7039ab0fd70a117d730"),
+		ObjectId(
+		"4d85c7039ab0fd70a117d732")] })
+
+Hier ist besonders interessant, das für einigen Dokumente das Attribut Manager ein Skalar sein 
+kan (also nur genau eine Manager enthält) während es bei anderen `employees` als Array 
+abgespeichert ist. Unsere ursprüngliche Suche funktioniert (einfach so) mit beiden:
+
+	db.employees.find({manager: ObjectId(
+		"4d85c7039ab0fd70a117d730")})
+
+Sie werden recht schnell merken das Arrays viel praktischer sind als sich mit many-to-many
+joins herum zu schlagen.
+
+Neben Array unterstützt MongoDB auch eingebettet Dokumente. Fügen wir doch einfach mal ein
+eingebettetes Dokument ein:
+
+	db.employees.insert({_id: ObjectId(
+		"4d85c7039ab0fd70a117d734"),
+		name: 'Ghanima',
+		family: {mother: 'Chani',
+			father: 'Paul',
+			brother: ObjectId(
+		"4d85c7039ab0fd70a117d730")}})
+
+Eingebettet Dokumente können mittels einer `dot-notation` gesucht werden:
+
+	db.employees.find({
+		'family.mother': 'Chani'})
+
+
+Wir werden die Anwendungsfälle von eingebetteten Dokumente und deren Benutzung noch detailliert 
+besprechen.
+
+Wenn wir die beidern Konzepte kombinieren können wir natürlich auch mehrere Dokumente in
+einemen Array einbetten:
+
+	db.employees.insert({_id: ObjectId(
+		"4d85c7039ab0fd70a117d735"),
+		name: 'Chani',
+		family: [ {relation:'mother',name: 'Chani'},
+			{relation:'father',name: 'Paul'},
+			{relation:'brother', name: 'Duncan'}]})
+
+## Denormalisierung / denormalisation ##
+
  
+
+
+
 
 
 
