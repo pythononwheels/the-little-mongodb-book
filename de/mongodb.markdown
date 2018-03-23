@@ -770,6 +770,20 @@ einemen Array einbetten:
 			{relation:'brother', name: 'Duncan'}]})
 
 ## Denormalisierung / denormalisation ##
+Eine andere Alternative zu joins ist die Daten zu denormalisieren. Früher war dieser Ansatz nur für performance-sensitiven code oder snapshots (wie zum Beispiel Audit logs) vorbehalten.
+Mit der wachsenden Popularität von NoSQL (DBs), von denen viele keine joins haben, wird Denormalisierung immer verbreiteter.
+Das bedeutet nicht das sie jede Information in jedem Dokument aktiv duplizieren müssen. Haben sie aber keine Angst davor, Daten so zu ordnen, wie sie auch zu den Dokumenten gehören.
+
+Nehmen wir mal an sie schreiben eine Forum Applikation. Dann wäre der klassiche Weg einen speziellen `user` mit einem `post` zu verbinden eine `userid` in dem `post` zu verlinken. Mit einem solchen Ansatz kann man erst `user` suchen (joinnen) um zugehörige `posts` darzustellen. 
+Eine Alternative wäre die `userid` und den `name` direkt im `post` zu speichern. Man kann sogar eingebettete Dokumente, wie `user: {id: ObjectId('Something'), name: 'Leto'}`, speichern. 
+Und ja, richtig, wenn ein User seinen Namen ändert muss man alle zugehörigen Dokumente ändern (das wäre dann ein multi-update).
+Anmerkung des Übersetzers: Das kommt aber im Gegensatz zu Suche sehr selten vor. Es finden über 90% Suchen und nur 10% updates statt. Der Performance Gewinn ist also sehr hoch
+
+Sich mit diesem Ansatz anzufreunden wird einigen sicher nicht leicht fallen. Und in einigen Fällen macht das auch keinen Sinn. Aber haben sie keine Angst mit diesem Ansatz zu experimentieren. 
+
+## Was sollten sie wählen? ##
+Arrays von ids können eine sinnvolle Strategie sein um mit one-to-many oder many-to-many Szenarien umzugehen. Aber meistens müssen Entwickler sich zwischen 'manuellen' Referenzen oder eingebtteten Dokumenten entscheinden.
+
 
  
 
