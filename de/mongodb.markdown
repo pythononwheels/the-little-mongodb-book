@@ -55,6 +55,11 @@ Anmerkungen zur deutschen Übersetzung (Rechtschreibung, Sprachstil etc.)
 könnt ihr am besten via [github issues](https://github.com/pythononwheels/the-little-mongodb-book/issues/new) 
 beisteuern. 
 
+Anerkung zur Version:
+Das Buch behandelt die MongoDB Version 2.6 aktuell ist 3.6.
+Die Basics sind aber gleich geblieben und da das Buch dem Einstieg in die Arbeit mit MongoDB dient, kann man es genauso inklusive der Beispiele in neueren Versionen weiter verwenden. 
+
+[Slideshare mit den Changes der MongoDB Versionen findet ihr hier](https://de.slideshare.net/mongodb/webinar-whats-new-in-mongodb-32)
 # Einleitung #
  > It's not my fault the chapters are short, MongoDB is just easy to learn.
  
@@ -781,8 +786,23 @@ Anmerkung des Übersetzers: Das kommt aber im Gegensatz zu Suche sehr selten vor
 
 Sich mit diesem Ansatz anzufreunden wird einigen sicher nicht leicht fallen. Und in einigen Fällen macht das auch keinen Sinn. Aber haben sie keine Angst mit diesem Ansatz zu experimentieren. 
 
-## Was sollten sie wählen? ##
-Arrays von ids können eine sinnvolle Strategie sein um mit one-to-many oder many-to-many Szenarien umzugehen. Aber meistens müssen Entwickler sich zwischen 'manuellen' Referenzen oder eingebtteten Dokumenten entscheinden.
+## Welchen Ansatz sollten sie wählen? ##
+Arrays von Ids können eine sinnvolle Strategie sein um mit `one-to-many` oder `many-to-many` Szenarien umzugehen. Aber meistens müssen Entwickler sich zwischen 'manuellen' Referenzen oder eingebtteten Dokumenten entscheinden.
+
+Zunächstmal muss man wissen das einzelne Dokumente aktuell auf 16 MB Grösse beschränkt sind. Zu wissen das Dokumente überhaupt ein Grösselimit haben, auch wenn das erstmal recht grosszügig erscheint, gibt einem auch gleich eine Indikation wie Dokumente zu gebrauchen sind. Zur Zeitr scheinen die meisten Entwickler dahin zu tendieren, manuelle Referenzen für Relationen (relationships) zu verwenden. Eingebettete Dokumenten (embedded documents) werden ebenfalls häufig verwendet aber meistens für kleinere Datenmengen die man immer mit dem "Elterndokument" (parent document) erhalten möchte. Ein Besipiel wäre das speichern eines eingebetteten `addresses` documents direkt in jedem `user` document:
+
+	db.users.insert({name: 'leto',
+		email: 'leto@dune.gov',
+		addresses: [{street: "229 W. 43rd St",
+		            city: "New York", state:"NY",zip:"10036"},
+		           {street: "555 University",
+		            city: "Palo Alto", state:"CA",zip:"94107"}]})
+
+Das soll nicht heissen, das sie eingebettet Dokumente unterschätzen oder nur als kleines utility betrachten sollten. Denn wenn man die Programm Objecte direkt auf die Daten abbilden kann macht es einem das leben oftmals erheblich leichter. Das muss man ansonsten oft mit joins künstlich nachbilden. Dies wird umso besser und richtiger wenn man zusätzlich bendent das man in MongoDB auch eingebettete Dokumente indexieren und direkt abfragen kann. (Anm.d.Ü.: First-class-citizens)
+
+## Wenig oder viele Collections ? ##
+
+
 
 
  
