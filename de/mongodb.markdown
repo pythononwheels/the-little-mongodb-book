@@ -801,7 +801,43 @@ Zunächstmal muss man wissen das einzelne Dokumente aktuell auf 16 MB Grösse be
 Das soll nicht heissen, das sie eingebettet Dokumente unterschätzen oder nur als kleines utility betrachten sollten. Denn wenn man die Programm Objecte direkt auf die Daten abbilden kann macht es einem das leben oftmals erheblich leichter. Das muss man ansonsten oft mit joins künstlich nachbilden. Dies wird umso besser und richtiger wenn man zusätzlich bendent das man in MongoDB auch eingebettete Dokumente indexieren und direkt abfragen kann. (Anm.d.Ü.: First-class-citizens)
 
 ## Wenig oder viele Collections ? ##
+Da Collections keinem Schema entsprechen müssen wäre es absolut möglich ein System mit nur einer Colletion, mit einem Mischmasch von Dokumenten zu bauen aber das wäre eine sehr schlechte Idee.
+Die meisten MongoDB Systems sind ähnlich aufgebaut wie man es auch bei relationalen Datenbanken finden würde, wenn auch i.d.R. mit weniger Collentions (Anm: als Tabellen in SQLDBs). Anders gesagt: Wenn es in einer relationaled DB eine Tabelle wäre, dann ist die Chance recht hoch, das es auch eine Collention in MongoDB wäre (Ausnahmen bilde `many-to-many`joins, sowie Tabellen die nur dazu dienen `one-to-many`Beziehungen mit einfachen Entities abzubilden.)
 
+Die Betrachtung wird sogar noch interessanter, wenn man eingebettete Dokumente mit in Betracht zieht. Ein häufiges Beispiel dafür ist ein Blog. Soll man eine `posts`und eine `comments` Collection erstellen oder ist es besser, das jeder `post`ein Array von eingebetteten `comments`hat? Wenn wir in diesem Fall mal das 16MB Limit ausser acht lassen (Das ganze Buch Hamlet umfasst als (ASCII) Text nur 200KB - also wie Populär muss ihr Blog erst werden um das zu sprengen?), sollten man in der Regel die beiden Collection spearat erstellen. Das ist einfach *sauberer*, expliziter und ist am Ende auch performanter. MongoDB's flexible Schemas erlauben es sogar einen gemischten Ansatz zu fahren und die ersten paar Kommentare einzubetten und die folgenden in ihrer eigenen Collection abzuspeichern. Das würde auch dem Prinzip entsprechen Daten zusammen zu halten die man in einer Abfrage direkt zurück erhalten möchte (Anm: Post + relevanteste Comments. Der Rest würde erst bei einem klick auf *...more* geladen)
+
+Es gibt aber keine feste Regel (ausser dem 16MB limit). Spielen sie also ruhig mit verschiedenen Ansätzen und bekommen sie ein Gefühl dafür was sicht *richtig* anfühlt und was nicht.
+
+## In diesem Kapitel ##
+Ziel dieses Kapitels war es, einige hilfreiche Richtlinien als Startpunkt für die Datenmodellierung in MongoDB zu geben. Wie sie sehen konnten unterscheidet sich die Datenmodellierung in dokumentenorientierten leicht zu der in relationalen Welt. MAn hat mehr Freiheiten aber auch eine Einschränkung (Anm: das 16MB limit) aber für neue Systeme passt das eigentlich immer sehr gut. Im Grunde ist der einzige Fehler den man machen kann der, es nicht (ausgiebig) zu probieren.
+
+## Wann sollten sie MongoDB benutzen ##
+Eigentlich sollten sie jetzt bereits selbst ein gutes Gefühl dafür haben wo MongoDB gut in ihre Systeme passen könnte. Es gibt so viele neue und konkurrierende Storage Technologien das man leicht von der schieren Antzahl der Auswahlmöglichkeiten überwältigt werden kann.
+
+Die wichtigste Erkenntnis für mich ist es, das man heute nicht mehr auf eine Lösung vertrauen muss um seine Daten zu verwalten (das hat im Grunde nichts mit MongoDB zu tun). Zweifellos hat eine einzige Lösung für Datenverwaltung auch ihre Vorteile und für einige Projekte (vielleicht sogar die meisten) ist die "eine" Lösung auch der sinnvollste Ansatz.
+Die Idee ist nicht das sie immer mehrere/verschiedene Lösungen in jedem Projekt verwenden *müssen* aber das sie es *können*. Sie alleine wissen ob der Nutzen einer neuen Lösung den Aufwand übersteigt.
+
+Jetzt wo das klar ist, hoffe ich das sie MongoDB als generellen Lösungsansatz zur Datenverwaltung sehen. Es wurde ja bereits mehrfach erwähnt das dokumenten orientierte Datenbanken eine ganze Menge mit relationalen Ansätzen gemeinsam haben. 
+Darum kann man ziemlich einfach sagen, statt immer darum herum zu reden, das MongoDB als direkte Alternative zu relationalen Datenbanken gesehen werden kann (Anm.d.Ü.: zumindest mit Ausnahme von Transaktionen auf DB Ebene (ACID vs eventual consistency) )
+
+Bitte beachten sie das ich MongoDB nicht als *Ersatz* für relationale Datenbanken bezeichne sondern als *Alternative*. MongoDB ist ein Tool das Dinge macht, die andere Tools auch können. Manche eben deutlich besser, manche nicht so gut. Lassen sie uns die Dinge mal etwas näher beleuchten.
+
+## Flexible Schemas ##
+Ein oft zitierter Vorteil von dokumenten orientierten Datenbanken ist, das sie nicht zwingend ein fixes Schema voraussetzen. Das macht sie viel flexibler als traditionelle Datenbanktabellen. Ich stimme zu das flexible Schemas ein tolles Feature sind allerdings nicht aus dem Grund, den die meisten vermuten.
+
+Viele Leute reden über schemalose Dbs als würde man plötzlich beginnen einen verrückten Mischmasch von Daten zu speichern. Es gibt zwar Domänen und Datensätze die wirklich extrem schwer in relationalen DBs abzubilden sind aber ich denke das das eher Ausnahmen sind. Schemalos ist zwar cool aber die meisten ihrer Daten sind eben trotzdem sehr strukturiert. Es ist zwar manchmal sehr nützlich (in derselben collection) unterschiedliche Strukturen zu haben, speziell wenn man neue Features einführen möchte aber auch das sind Dinge die sich mit nullable columns lösen lassen.
+
+Für mich besteht daher der echte Vorteil von dynamischen (oder felxiblen) Schemas darin, das man sich den gesamten EInrichtungsaufwand spart und nahezu eine direkte Abbildung auf OOP hat. Das wird umso vorteilhafter, wenn sie mit einer statischen Programmiersprache arbeiten. Ich habe mit MongoDB sowohl mit C# als auch mit Ruby gearbeitet und die Unterschiede sind beachtlich. Ruby's dynamische Natur und die populäre `ActiveRecord` Implementierung elimieren die Objekt-relationalen Abbuildungsprobleme schon zu weiten Teilen von sich aus. Das soll jetzt nicht heissen das MongoDB und Ruby nicht zusammen passen, eher das Gegenteil ist der Fall. Aber ich denke die meisten Ruby developer werden MongoDB eher als inkrementelle Verbesserung sehen, wohingegen C# oder Java Developer eine fundamentale (positive) Veränderung erleben werden wie sie mit ihren Daten umgehen.
+
+Versetzen sie sich doch mal in die Perspektivbe eines Treiber Entwicklers. Sie wollen ein Objekt abspeichern? Serialisieren sie es in JSON (technisch korrekter in BSON aber das ist vergleichbar) und senden sie es an MongoDB. Es bedarf keines Attribute- oder Typ-Mappings. Von diesem absolut direkte arbeiten profitieren sofort sie, der Entwickler.
+
+## Schreiben / Writes ##
+Ein Gebiet in dem MongoDB eine spezielle Rolle spielen kann ist Logging. Es gibt zwei Aspekte in MongoDB die Schreiboperationen seht schnell machen. Erstens haben sie Option ein Write command zu senden das sofort endet ohne auf eine Bestätigung (des backends) zu warten. Zweitens können sie das Schreiverhalten je nach Daten Lebensdauer (durability) einstellen. Diese Einstellungen zusammen mit der Möglichkeit auch noch einzustellen wie viele Server ihren Schreibvorgang bestätigen müssen bevor er als erfolgreich angesehen wird, geben ihnen eine grossartige Kontrolle über Schreibperformance und Daten Lebensdauer.
+
+Zusätzlich zu diesen 
+
+
+ 
 
 
 
