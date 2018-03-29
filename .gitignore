@@ -1,7 +1,5 @@
 # Output books
 
-*.pdf
-*.epub
-*.mobi
 
 whats_left.py
+missfont.log
