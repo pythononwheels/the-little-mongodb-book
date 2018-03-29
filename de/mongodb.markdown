@@ -834,7 +834,112 @@ Versetzen sie sich doch mal in die Perspektivbe eines Treiber Entwicklers. Sie w
 ## Schreiben / Writes ##
 Ein Gebiet in dem MongoDB eine spezielle Rolle spielen kann ist Logging. Es gibt zwei Aspekte in MongoDB die Schreiboperationen seht schnell machen. Erstens haben sie Option ein Write command zu senden das sofort endet ohne auf eine Bestätigung (des backends) zu warten. Zweitens können sie das Schreiverhalten je nach Daten Lebensdauer (durability) einstellen. Diese Einstellungen zusammen mit der Möglichkeit auch noch einzustellen wie viele Server ihren Schreibvorgang bestätigen müssen bevor er als erfolgreich angesehen wird, geben ihnen eine grossartige Kontrolle über Schreibperformance und Daten Lebensdauer.
 
-Zusätzlich zu diesen 
+Zusätzlich zu diesen Performance Faktoren können Logdaten auch sehr vom Schemalosen Ansatz profitieren und MongoDB hat sogar noch sogenannte [capped collections](http://docs.mongodb.org/manual/core/capped-collections/). Bius Jetzt ware alle Collections die wir angelegt haben oder mit denen wir gearbeitet haben, ganz *normale* collentions. Eine *capped* collection legt man an, indem man im `db.createCollection` Kommando das flag capped setzt:
+
+	//limit our capped collection to 1 megabyte
+	db.createCollection('logs', {capped: true,
+		size: 1048576})
+
+Wenn unsere capped collection  das 1 MB limit erreicht (size: 1048576) werden die ältesten Dokumente automatisch überschrieben (purghed).Wenn man das limit statt als Grösse auf die Anzahl der Dokumente einschränken möchten, kann man das mit dem Parameter `max` machen. Capped Collections haben einige interessante Eigenschaften. Beispielsweise kann man Dolkumente verändern (updaten) aber sie behalten dabei ihre ursprüngliche Grösse bei. Die Reihenfolge für Einfügeoperationen (insert) wird immer beibehalten. Man muss also nicht extra einen Zeit basierten Index aufbauen um nach Zeit zu ordnen. Man kann auf capped collections auch einfach ein tail Kommando ausführen genauso wie man es auch von Dateien unter Unix gewohnt ist. Ein `tail -f <filename>` erlaubt es also immer die neusten Einträge zu erhalten ohne eine neue Suche auszuführen.
+
+Wenn man seine Einträge nicht auf Grösse oder Anzahl, sonden Zeitbasiert verfallen lassen möchte, kann man einen sogenannten [TTL Index](http://docs.mongodb.org/manual/tutorial/expire-data/) verwende. TTL Steht dabei für "time-to-live".
+
+## (Daten)Haltbarkeit / Durability ##
+Vor Version 1.8 hatte MongoDB keine single-server durability. Das bedeutet, das ein Ausfall eines Servers leicht zu Datenverlust oder korrupten Daten führen konnte [Siehe Auch](https://en.wikipedia.org/wiki/ACID#Durability). Die Lösung bestand bis zu dieser Verison darin, MongoDB immer in einer Multi-Server Umgebung zu betreiben (MongoDB unterstützt von Haus aus Replikation). Journaling war dann eines der Hauotfeatures, die in Version 1.8 eingeführt wurden. Seit Version 2.0 ist Journaling standardmässig eingeschaltet so das man im Falle eines Stromausfalles oder Servercrashes leicht die Daten wiederherstellen kann. 
+
+Ich erwähne durability hier nur, da in der Vergangenheit eine Menge Wirbel um MongoDBs nicht vorhandene single-server durability gemacht wurde. Wenn sie also heute noch Informationen über fehlendes Journaling finden sollten, so sind diese schlicht nicht mehr up to date.
+
+## Volltextsuche / Full Text Search ##
+In einer der letzten Ergänzugen wurde echte Volltextsuche zu den MopngoDB features hinzugefügt. Es werden aktuell 15 Sprachen  direkt unterstüztz inklusive [stemming](https://en.wikipedia.org/wiki/Stemming) und Stopwortlisten. Mit der UNterstützung von Volltextsuche und Arrays wird man nur in seltenen Fällen nach anderen Lösungen suchen müssen.
+
+## Transactions ##
+MongoDB selbst unterstützt keine direkten Transaktionen. Aber es gibt zwei Alternativen. Die eine ist super aber eingeschränkt in der Nutzung, die andere ist sehr flexibel aber etwas schwerfällig in der Benutzung.
+
+Die erste (leichte, schlanke) ist die sogenannte atomare Update Operation. Die sind super so lange sich damit das Problem auch adressiernew und lösen lässt. Einige der einfacheren, wie `$inc` und `$set`, haben wir bereits kennengelernt. Es gibt auch etwas komplexere wie `findAndModify` mit denen man ein Dokument updaten (ode auch löschen) kann und direkt (atomar) das Ergebnis erhält.
+
+Die zweite Möglichkeit, wenn atomare Operationen nicht ausreichend sind, ist ein klassische two-phase Commit. Ein two-phase commit ist für Transkationen, was für joins manuelles derefenzieren wäre. Es ist eine Lösung die unabhängig von der enginer ist, da sie sie im Code umsetzen. Two-phase commits sind tatsächlich auch in der relationalen Welt gebräuchlich um eine Transaktion über zwei Datenbanken zu ermöglichen. [Die MongoDB Website illustriert das](http://docs.mongodb.org/manual/tutorial/perform-two-phase-commits/) am typischen Beispiel eines Geldtransfers. Die Grundidee dabei ist die, das man den Transaktionsstatus mit einer atomaren Operation im zu ändernden Dokument speichert und die init-pending-commit/rollback Schritte dann manuell durchführt.
+
+Dabei machen MongoDB's eingebettete Dokumente und das schemalose Design die Arbeit mir two-phase commits zwar leichter aber es ist immer noch, gerade am Anfang, nicht wirklich perfekt.
+
+## Datenverarbeitung / Data Processing ##
+Vor Version 2.2 basierte die Datenverarbeitung mit MongoDB vornehmlich auf MapReduce. Mit Versiion 2.2 wurde dann ein Leistungsfähiges Feature namens: [aggregation framework or pipeline](http://docs.mongodb.org/manual/core/aggregation-pipeline/) eingeführt. Man benötigt MapReduce jetzt nur noch in den Fällen in denen komplexe Funktionen für Aggregationen nötig sind, die in den pipelines noch nicht unterstützt werden. Im nächsten Kapitel werden wir uns die Aggregation pipeline und MapReduce im Detail ansehen. Für jetzt reicht es aus sich diese Technologien als eine Art sehr vielfältige `group-by` vorzustellen (was aber eine himmelweite Untertreibung  ist.). 
+Für die Parallelverarbeitung von sehr sehr grossen Datenmengen werden sie wahrscheinlich trotzdem eher auf andere Systeme wie etwa Hadoop setzten. Glücklierweise ergänzen sich MongoDB und Hadoop sehr gut. Es gibt auch einen nativen [MongoDB connector for Hadoop](http://docs.mongodb.org/ecosystem/tools/hadoop/).
+
+Natürlich ist gerade die Parallele Datenverarbeiutung (sehr grosser Datenmengen) etwas bei dem relationale Datenbanke auch nicht gerade glänzen. Für MongoDB gibt es Pläne die Verarbeitung sehr grosser Datenmengen in Zukunft besser zu unterstützen. (Anm.d.Ü.: Es wäre hier sicher sinnvoll eine Indikation zu geben was *sehr grosse Datenmengen* sind - ich erstelle einen github issue dazu).
+
+## Räumliche Daten / Geospatial ##
+Eine besondere Stärke hat MongoDb im Bereich von räumlichen/Geodaten durch die direkte Unterstützung von [geospatial indexes](http://docs.mongodb.org/manual/applications/geospatial-indexes/). Das erlaubt es ihnen direkt geoJSON oder x,y Koordination in Dokumenten zu speichern und dann Dokumente zu finden die nahe an einer Koordinatenmenge liege (`$near`) oder die sich in einer definierten Box oder in einem Kreis befinden (`$within`). Da das Features sind die man am besten visuell erklären kann möchte ich sie hier ermuntern sich einmal das [5 minute geospatial interactive tutorial](http://mongly.openmymind.net/geo/index) anzusehen.
+
+## Tools und Reifge (maturity) ##
+Sie kennne die Antwort darauf wahrscheinlich bereits, denn MongoDB ist nunmal offensichtlich jünger als die meinsten relationalen Datenbanksysteme. Das ist auch etwas was man immer berücksichtigen sollte, wobei die relevanz dieses Aspektes eben auch stark von dem abhängt *was* sie machen wollen und *wie* sie es machen wollen. Dennoch kann man bei einer ehrlichen Betrachtung nicht verleugnen, das MongoDB eben jünger ist und die Verfügbarkeit von Tools deshalb (noch) nicht grossartig ist (Allerdings sind die Tools die z.T rund um sehr lang existierende, relationale Datenbanken existieren zum Teil auch eher schrecklich).
+(Anm.d.Ü.: Wobei sich hier Aufgrund der grossen Popularität von MongoDB seit dem Erscheinen der Version 2.6 in 2014 eine Menge zum positiven getan hat)
+Beispielsweise könnte das fehlen von base-10 floating point numbers eine echte Einschränkung für Systeme sein, die mit Gelddaten arbeiten (auch wenn das kein echter Show-stopper sein muss.) 
+
+Auf der anderen Seite ist das Protokoll modern und einfachen, es existieren native Treiber für eine grosse Anzahl an Programmiersprachen und schreitet die Entwicklung mit unglaublicher Geschwindigkeit voran. MongoDB ist heute in so vielen Unternehmen im produktiven Einsatz, das Bedenken bezüglich der Reife, wenn auch berechtigt, schnell der Vergangenheit angehören werden.
+
+## In diesem Kapitel / In This Chapter ##
+Die Botschaft dieses Kapitels ist es, das MongoDB in den meisten Fällen eine relationale Datenbank ersetzen kann. MongoDB ist leichter, direkter, schneller und erzeugt in der Regel weniger Restriktionen für (Applikations) Entwickler.
+Fehlende Transaktionen sind hingegen ein bereiten dem einen oder anderen Sorge. Wenn Leute mich fragen: *Und wo ordnet sich MongoDB schlussendlich in der Datenbank Landschaft ein?* ist die Antwort für mich leicht: **genau in der Mitte**
+
+# Kapitel 6 - Daten aggregieren / Aggregating Data #
+
+## Aggregation Pipeline ##
+Die aggregation pipeline ist ein Mittel um Dokumente in einer Collection zu transformieren und zu kombinieren. Dazu werden die Dokumente entlang einer Pipeline verarbeitetm, die sich so wie das klassische Unix "pipe" Kommando verhält. Der Output des ersten Kommandos ist der Input des Zweiten, dessen Output ist der Input des nächsten, usw.
+
+Die einfachste Aggregation, die sie wahrscheinlich auch schon kennen, ist die SQL `group-by` exprression. Wir haben auch schon die einfache `count()`Methode kennengelernt. Wie können wir also sehen wie viele Einhörner (unicorns) männlich und wie viele weiblich sind ?
+
+	db.unicorns.aggregate([{$group:{_id:'$gender',
+		total: {$sum:1}}}])
+
+In der shell haben wir zu diesem Zweck die aggregate Hilfsfunktion, die ein Array von Pipeline Operatoren erhält. Für ein einfaches zählen, das irgendwie gruppiert ist, reicht ein einziger Operator, nämlich `$group`. Dieser entspricht tatsächlich genau dem `GROUP BY` aus SQL, bei dem wir ein neues Dokument mit der `_id` anlegen, nach der wir gruppieren wollen (hier: `gender`). Weiteren Feldern werden üblicherweise Ergebnisse von Aggregationen zugewiesen. In diesem Fall `$sum` 1 für jedes Dokument das einem spezifischen Geschlecht enstspricht.
+Ihnen ist vielleicht aufgefallen das wir dem `_id` Feld nicht `gender` sondern `$gender` zugewiesen haben. Das `'$'` vor einem Feldnamen bedeutet das der Wert des eingehenden Dokumentes ersetzt wird.  
+
+Welche anderen Pipeline Operatoren können sie noch benutzen ? Der am häufigsten in Verbindung mit `$group` verwendete Operator dürfte `$match` sein. Dieser entspricht genau der `find` Methode und erlaubt es nur die Dokumente zu aggregieren, die dem Filter entsprechen.
+
+	db.unicorns.aggregate([{$match: {weight:{$lt:600}}},
+		{$group: {_id:'$gender',  total:{$sum:1},
+		  avgVamp:{$avg:'$vampires'}}},
+		{$sort:{avgVamp:-1}} ])
+
+An dieser Stelle haben wir gleich den nächsten Operator, nämlich `$sort` eingeführt. Der macht genau das was sie denken und lässt sich mit den Operatoren `$skip` und `$limit` erweitern. Des weiteren haben wir in der o.a. Aggregation noch den `$group`Operator `$avg` benutzt.
+
+MongoDB Arrays sind sehr mächtig und können deshalb ebenso in Aggregationen einbezogen werden. Wir müssen sie allerdings erstmal *glätten* um alle Attribute richtig zählen zu können:
+
+	db.unicorns.aggregate([{$unwind:'$loves'},
+     	{$group: {_id:'$loves',  total:{$sum:1},
+	 	unicorns:{$addToSet:'$name'}}},
+	  	{$sort:{total:-1}}, 
+	  	{$limit:1} ])
+
+Mit dieser Aggregation finden wir heraus, welches Essen bei Einhörnern besonders beliebt ist und wir erhalten zusätzlich zu jedem Nahrungs Item eine Liste der Einhörner die es mögen. Durch die Verwendung von `$sort` und `$limit` kann man sehr leicht "Top n" Fragen beantworten.
+
+Ein weiterer sehr mächtiger Pipeline Operator ist [`$project`](http://docs.mongodb.org/manual/reference/operator/aggregation/project/#pipe._S_project) (Mit ihm kann man projektionen wie bei `find`durchführen) mitr dem man nicht nur vorhandene Felder einbeziehen, sondern auch neue Felder erzeugen kann die auf vorhandenen Werten basieren. Man könnte Beispielsweise mathematische Operatoren verwenden um zunächst mehrere Felder zu addieren und anschliessend den Durchschnitt über alles zu ermitteln. Man könnte auch String Operatoren verwenden um ein neues Feld mit konkatenierten Werten vorhandener Strings zu erzeugen.
+
+Das alles berührt aber nur die Oberfläche von dem was sie mit Aggregationen wirklich machen können-In Version 2.6 sind Aggregationen noch einmal deutlich mächtiger geworden da sie nun entweder einen Cursor zurückgeben (Den sie bereits aus Kapitel 1 kennen) oder, mit dem `$out` Pipeline Operator, die Ergebnisse auch in eine neue Collection schreiben können. 
+Sie finden eine Menge mehr Beispiele und alles Unterstützten Pipeline Expressions und Operatoren hier im [MongoDB manual](http://docs.mongodb.org/manual/core/aggregation-pipeline/). 
+
+## MapReduce ##
+MapReduce ist ein wzeischrittiger Ansatz der Datenverarbeitung. Als erstes erfolgt ein map, dann das reduce (Anm.d.Ü: Nomen est Omen ;). Der mapping Schritt transformiert die Eingabedokumente und erzeugt ein key=>value Paar (Wobei der key und die values ruhig komplex sein können).
+Dann werden die key/value Paare nach keys gruppiert, so das alle Werte für denselbe key in einem Array landen. Der reduce Schritt erhält jeweils die  keys und die dazugehörigen Werte-Arrays und generiert daraus das endgültige Ergebnis.
+Die map und reduce Funktionen werden in Javascript geschrieben.
+
+Bei MongoDB benutzen wir das `mapReduce` Kommando auf Collection Ebene. `mapReduce` erhält eine map Funktion, eine reduce Funktion und eine output Direktive. In der shell kann man dazu direkt JavaScript Funktionen anlegen und an `mapReduce` übergeben. Aus den meisten anderen Libraries übergibt man die Funktionen als String (was sich ein bisschen unschön anfühlt). Der Dritte Parameter (output) setzt zusätztliche Optionen. Besipielsweise kann man hier die Dokumente filtern, sortieren oder limitieren bevor sie Analysiert werden. Man kann auch noch eine `finalize` Methode angeben, die nach dem `reduce` Schritt ausgeführt wird.
+
+Wahrscheinlich werden sie MapReduce für die allermeisten ihrer Aggregationen nicht benötigen aber wenn es doch der Fall sein sollte, dann können sie in [meinem Blog](http://openmymind.net/2011/1/20/Understanding-Map-Reduce/) und im [MongoDB manual](http://docs.mongodb.org/manual/core/map-reduce/) mehr darüber erfahren.
+
+## In diesem Kapitel ##
+In diesem Kapitel haben wir MongoDB's [Aggregations Möglichkeiten](http://docs.mongodb.org/manual/aggregation/) behandelt. Die Aggregation Pipeline ist recht einfach zu benutzen, wenn man einmal die Struktur verstanden hat. Und sie ist ein mächtiges Werkzeug um Daten zu gruppieren (aggregieren). MapReduce ist hingegen deutlich komplexer, dafür sind die Möglichkeiten aber im Grunde nur durch die Limits von JavaScript begrenzt.
+
+# Chapter 7 #
+In diesem letzten Kapitel werden wir uns mit Performance Aspekten und Tools für MongoDB Entwickler beschäftigen. Wir werden jeweils nicht sehr tief in die Themen eintauchen aber die jeweils wichtigsten Aspekte herausarbeiten.
+
+## Indexe / Indexes ##
+
+
+
+
+
+
 
 
  
