@@ -60,14 +60,16 @@ Das Buch behandelt die MongoDB Version 2.6 aktuell ist 3.6.
 Die Basics sind aber gleich geblieben und da das Buch dem Einstieg in die Arbeit mit MongoDB dient, kann man es genauso inklusive der Beispiele in neueren Versionen weiter verwenden. 
 
 [Slideshare mit den Changes der MongoDB Versionen findet ihr hier](https://de.slideshare.net/mongodb/webinar-whats-new-in-mongodb-32)
+
+
 # Einleitung #
  > It's not my fault the chapters are short, MongoDB is just easy to learn.
  
  > Es ist nicht meine Schuld das die Kapitel so kurz sind, MongoDB ist eben einfach leicht zu lernen.
 
 
-Oftmals wird gesagt das sich Technologie rasant entwickelt. Es ist zwar richtig, das die Liste der Technologien 
-und Techniken immer länger wird, aber ich war immer der Meinung das die fundamentalen Methoden und Technologien 
+Es wird oft geagt, das sich die Technologie rasant entwickelt. Es ist zwar richtig, das die Liste der Technologien 
+und Techniken immer länger wird, aber ich war immer der Meinung das die fundamentalen Methoden 
 für Softwareentwickler sich eher langsam entwickeln. Man kann Jahre damit verbringen eine kleine, aber
 wichtige Technik zu erlernen.
 Auffällig ist jedoch, mit welcher Geschwindigkeit (heute) Technologien ersetzt werden. Scheinbar 
@@ -95,13 +97,13 @@ Anders gesagt bedeutet NoSQL (für mich) der Überzeugung zu sein, das Datenpers
 eines einzelenen Systems ist.
 
 Hersteller relationaler Datenbankmanagementsysteme versuchen seit langer Zeit ihre Systeme als eine "One size
-fits all" Lösung zu positionieren. NoSQL Systeme hingegen gehe eher in Richtung kleinere Einheiten der 
+fits all" Lösung zu positionieren. NoSQL Systeme hingegen gehen eher in Richtung kleinere Einheiten der 
 Verantwortlichkeit um das beste tool für den jeweiligen Zweck wirksam einsetzen zu können.
 Also kann es durchaus so sein, das ihr NoSQL Anwendungs-Stack auch relationale Datenbanken, wie zum Beispiel MySQL
 beeinhaltet, sie aber eben auch z.B. Redis zur schnellen Datensuche und Hadoop für intensive
 Datenverarbeitung nutzen. 
-Kurz gesagt geht es beinm Thema NoSQL um Offenheit und Bewusstsein für Alternative, existierende und neue Muster
-und Tools um Daten zu Verwalten.
+Kurz gesagt geht es beim Thema NoSQL um Offenheit und Bewusstsein für alternative, existierende und neue Muster
+und Tools um Daten zu verwalten.
 
 Jetzt fragen sie sich sicherlich wie nun MongoDB in all dies hineinpasst. Als dokumentenorientierte Datenbank (DB)
 ist MongoDB ein sehr breit einsetzbares (generalized) NoSQL System. Es sollte als eine Alternative zu relationalen
@@ -113,23 +115,23 @@ MongoDB selbst hat natürlich Vor- und Nachteile, auf die in späteren Kapiteln 
 # Einstieg / Getting started #
 
 Der grösste Teil des Buches befasst sich mit den Kernfunktionen von MongoDB. Deshalb werden wir sehr viel
-mit der MongoDB shell arbeiten. Die shell ist sowohl ein gutes Tool zum lernen als auch zur Administration,
-zum Ausführen ihrer Programme benötigen sie jedoch auch einen MongoDB Treiber.
+mit der MongoDB shell arbeiten. Die shell ist sowohl ein gutes Tool zum lernen als auch zur Administration.
+Zum Ausführen ihrer Programme benötigen sie jedoch auch einen MongoDB Treiber.
 
-Das bringt uns zur ersten Sache die sie über MongoDB lernen sollten: die MongoDB Treiber. MonmgoDB hat
+Das bringt uns zur ersten Sache die sie über MongoDB lernen sollten: die MongoDB Treiber. MongoDB hat
 eine ganze [Reihe von offiziellen Treibern](http://docs.mongodb.org/ecosystem/drivers/) für verschiedene 
 Programmiersprachen. Diese Treiber sind vergleichbar mit den Datenbanktreibern die sie wahrscheinliche schon
-von anderen DBDatenbank Systemen kennen. Auf der Basis dieser Treiber hat die Entwicklergemeinde speziellere
+von anderen Datenbank Systemen kennen. Auf der Basis dieser Treiber hat die Entwicklergemeinde speziellere
 libraries und Frameworks für verschieden Sprachen implementiert. 
 Beispiele sind [NoRM](https://github.com/atheken/NoRM), eine C# library die LINQ implementiert, sowie 
 [MongoMapper](https://github.com/jnunemaker/mongomapper), eine Active-Record freundliche Ruby library.
 Ob sie ihre Programme mit den Basistreiber oder mit Hilfe einer höheren Library entwicklen liegt alleine
-bei ihnen. Ich möchte dies hier nur klarstellen, da Menschen die neu bei MongoDB sind manchmal durch den
+bei ihnen. Ich möchte dies hier einmal klarstellen, da manche Leute die mit MongoDB anfangen, durch den
 Umstand verwirrt werden, das es offizielle Treiber und Community libraries gibt.
 Erstere konzentrieren sich mehr auf Konnektivität und Kommunikaiton mit MongoDB während die Community libraries
 sich mehr auf die Programmiersprachen und Framework spezifischen Aspekte beziehen.
 
-Während sie dieses Buch lesen möchte ich sie ermutigen auch immer praktisch zu probieren was ich vorstelle
+Während sie dieses Buch lesen möchte ich sie ermutigen auch immer praktisch auszuprobieren was ich vorstelle
 und auch Fragen die sie haben selbst durch ausprobierne zu klären. Es ist sehr leicht mit MongoDb zu starten,
 also lassen sie uns ein paar Minuten nehmen um die Umgebung aufzusetzen.
 
@@ -214,7 +216,7 @@ von anderen Dokumenten in der selben `collection` unterscheiden können).
 Einen `collection` ist also ein eher *dummer* container im Vergleich zu einer Tabelle, während in einem `Dokument`
 deutlich mehr Informationen  als in einer `Zeile` stecken.
 
-Auch wenn es wichtig ist die Unterschiede zu kennen, mpssen sie nicht verzweifeln wenn ihnen jetzt noch nicht
+Auch wenn es wichtig ist die Unterschiede zu kennen, müssen sie nicht verzweifeln wenn ihnen jetzt noch nicht
 alles völlig klar ist. Sie werden nicht mehr als eine Handvoll "inserts" brauchen um zu verstgehen was damit 
 wirklich gemeint ist. Letztendlich ist der Hautpaspekt, das eine collection nicht streng vorgiebt, was in ihr
 gespeichert wird (Eine collection ist schema-los). #todo Felder werden für jedes Dokument individuell 
