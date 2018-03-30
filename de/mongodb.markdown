@@ -42,20 +42,18 @@ The aktuellen Original-Quellen dieses Buches findet ihr unter:
 
 ## Die deutsche Übersetzung ##
 Die deutsche Übersetzung wurde erstellt von Klaas-Henning Zweck 
-(twitter: [@pythononwheels](http://twitter.com/pythononwheels) )
-Die aktuellen Quellen der deutschen Übersetzung des Buches findet ihr hier:
+Twitter: [@pythononwheels](http://twitter.com/pythononwheels)
+Die aktuellen Quellen der deutschen Übersetzung des Buches findet ihr 
+[auf github](https://github.com/pythononwheels/the-little-mongodb-book)
 
-<https://github.com/pythononwheels/the-little-mongodb-book>.
-
-Und hier findet ihr die jeweils aktuellen PDF, ePub und mobi Versionen.
-
-<http://pythononwheels.org/post/the_little_mongodb_book>
+[Und hier findet ihr die jeweils aktuellen PDF, ePub und mobi Versionen]
+(http://pythononwheels.org/post/the_little_mongodb_book)
 
 Anmerkungen zur deutschen Übersetzung (Rechtschreibung, Sprachstil etc.)
 könnt ihr am besten via [github issues](https://github.com/pythononwheels/the-little-mongodb-book/issues/new) 
 beisteuern. 
 
-Anerkung zur Version:
+##Anmerkung zur Version: (Stand 30.März.2018)##
 Das Buch behandelt die MongoDB Version 2.6 aktuell ist 3.6.
 Die Basics sind aber gleich geblieben und da das Buch dem Einstieg in die Arbeit mit MongoDB dient, kann man es genauso inklusive der Beispiele in neueren Versionen weiter verwenden. 
 
