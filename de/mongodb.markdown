@@ -42,12 +42,11 @@ The aktuellen Original-Quellen dieses Buches findet ihr unter:
 
 ## Die deutsche Übersetzung ##
 Die deutsche Übersetzung wurde erstellt von Klaas-Henning Zweck 
-Twitter: [@pythononwheels](http://twitter.com/pythononwheels)
+Twitter: [pythononwheels](http://twitter.com/pythononwheels)
 Die aktuellen Quellen der deutschen Übersetzung des Buches findet ihr 
 [auf github](https://github.com/pythononwheels/the-little-mongodb-book)
 
-[Und hier findet ihr die jeweils aktuellen PDF, ePub und mobi Versionen]
-(http://pythononwheels.org/post/the_little_mongodb_book)
+[Und hier findet ihr die jeweils aktuellen PDF, ePub und mobi Versionen](http://www.pythononwheels.org/the_little_mongodb_book)
 
 Anmerkungen zur deutschen Übersetzung (Rechtschreibung, Sprachstil etc.)
 könnt ihr am besten via [github issues](https://github.com/pythononwheels/the-little-mongodb-book/issues/new) 
